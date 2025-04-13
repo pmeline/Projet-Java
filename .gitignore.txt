@@ -1,0 +1,49 @@
+# Binaires compilés
+*.class
+
+# Dossiers générés
+/bin/
+/build/
+
+# Fichiers temporaires
+*.log
+*.tmp
+
+# IDEs
+# IntelliJ IDEA
+.idea/
+*.iml
+out/
+
+# Eclipse
+.project
+.classpath
+.settings/
+.target/
+
+# NetBeans
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+*.bak
+
+# VS Code
+.vscode/
+
+# Maven
+target/
+
+# Gradle
+.gradle/
+build/
+
+# Autres
+*.jar
+*.war
+*.ear
+
+# Système
+.DS_Store
+Thumbs.db
