@@ -4,6 +4,7 @@ import com.oxyl.coursepfback.model.MapModel;
 import com.oxyl.coursepfback.model.ZombieModel;
 import com.oxyl.coursepfback.persistance.repository.ZombieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,7 +16,7 @@ public class ZombieService implements ZombieServiceInterface {
     private final MapService mapService;
 
     @Autowired
-    public ZombieService(ZombieRepository zombieRepository, MapService mapService) {
+    public ZombieService(ZombieRepository zombieRepository,@Lazy MapService mapService) {
         this.zombieRepository = zombieRepository;
         this.mapService = mapService;
     }
@@ -27,7 +28,7 @@ public class ZombieService implements ZombieServiceInterface {
             if (map == null) {
                 throw new IllegalArgumentException("La map avec l'id " + zombieModel.getId_map() + " n'existe pas.");
             }
-        }
+        }w
         zombieRepository.createZombie(zombieModel);
     }
 
