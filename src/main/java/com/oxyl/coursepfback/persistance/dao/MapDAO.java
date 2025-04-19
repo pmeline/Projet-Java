@@ -46,17 +46,7 @@ public class MapDAO implements MapDAOInterface {
     @Override
     public void deleteMap(Long id) {
         String sql = "DELETE FROM map WHERE id_map = ?";
-        jdbcTemplate.update("UPDATE zombie SET id_map = NULL WHERE id_map = ?", id);
-        try {
-            int rowsAffected = jdbcTemplate.update(sql, id);
-            if (rowsAffected == 0) {
-                // Aucune ligne supprimée - l'ID n'existe peut-être pas
-                throw new RuntimeException("Aucune map trouvée avec l'ID: " + id);
-            }
-        } catch (Exception e) {
-            // Capturer l'exception précise (DataIntegrityViolationException pour les contraintes)
-            throw new RuntimeException("Erreur lors de la suppression de la map: " + e.getMessage(), e);
-        }
+        jdbcTemplate.update(sql, id);
     }
 
     private static class MapRowMapper implements RowMapper<MapEntity> {
