@@ -34,7 +34,7 @@ public class ZombieDAO implements ZombieDAOInterface{
     }
 
     @Override
-    public List<ZombieEntity> getZombiesByMapId(long id_map) {
+    public List<ZombieEntity> getZombiesByMapId(Long id_map) {
         String sql = "SELECT * FROM zombie WHERE id_map = ?";
         return jdbcTemplate.query(sql, new ZombieRowMapper(), id_map);
     }
