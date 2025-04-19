@@ -33,6 +33,11 @@ public class ZombieDAO implements ZombieDAOInterface{
         return zombies.isEmpty() ? null : zombies.get(0);
     }
 
+    @Override
+    public List<ZombieEntity> getZombiesByMapId(long id_map) {
+        String sql = "SELECT * FROM zombie WHERE id_map = ?";
+        return jdbcTemplate.query(sql, new ZombieRowMapper(), id_map);
+    }
 
 
     @Override

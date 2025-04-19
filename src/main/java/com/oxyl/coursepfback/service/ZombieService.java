@@ -37,6 +37,11 @@ public class ZombieService implements ZombieServiceInterface {
     }
 
     @Override
+    public List<ZombieModel> getZombiesByMapId(Long id_map) {
+        return zombieRepository.getZombiesByMapId(id_map);
+    }
+
+    @Override
     public List<ZombieModel> getAllZombies() {
         return zombieRepository.getAllZombies();
     }

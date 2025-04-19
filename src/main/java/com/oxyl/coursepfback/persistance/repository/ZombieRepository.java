@@ -29,6 +29,10 @@ public class ZombieRepository {
         return mapper.mapEntityToModel(zombieDAO.getZombie(id_zombie));
     }
 
+    public List<ZombieModel> getZombiesByMapId(Long id_map) {
+        return mapper.mapListEntityToModel(zombieDAO.getZombiesByMapId(id_map));
+    }
+
     public void createZombie(ZombieModel zombieModel) {
         ZombieEntity zombieEntity = mapper.mapModelToEntity(zombieModel);
         zombieDAO.createZombie(zombieEntity);

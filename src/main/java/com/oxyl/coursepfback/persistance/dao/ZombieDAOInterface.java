@@ -11,5 +11,6 @@ public interface ZombieDAOInterface {
     void updateZombie(ZombieEntity zombie);
     void deleteZombie(Long id);
     ZombieEntity getZombie(Long id);
+    List<ZombieEntity> getZombiesByMapId(Long id_map);
     List<ZombieEntity> getAllZombies();
 }
