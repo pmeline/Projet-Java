@@ -27,10 +27,9 @@ public class PlanteDAO implements PlanteDAOInterface {
     }
 
     @Override
-    public PlanteEntity getPlante(Long id_plante) {
+    public PlanteEntity getPlante(Long id) {
         String sql = "SELECT * FROM plante WHERE id_plante = ?";
-        List<PlanteEntity> result = jdbcTemplate.query(sql, new PlanteRowMapper(), id_plante);
-        return result.isEmpty() ? null : result.get(0);
+        return jdbcTemplate.queryForObject(sql, new PlanteRowMapper(), id);
     }
 
 
@@ -57,7 +56,7 @@ public class PlanteDAO implements PlanteDAOInterface {
     @Override
     public void updatePlante(PlanteEntity plante) {
         String sql = "UPDATE plante SET point_de_vie = ?, attaque_par_seconde = ?, degat_attaque = ?, cout = ?, soleil_par_seconde = ?, effet = ?, chemin_image = ?, nom = ? WHERE id_plante = ?";
-        jdbcTemplate.update(sql, plante.getPoint_de_vie(), plante.getAttaque_par_seconde(), plante.getDegat_attaque(), plante.getCout(), plante.getSoleil_par_seconde(), plante.getEffet(), plante.getChemin_image(), plante.getNom(), plante.getId());
+        jdbcTemplate.update(sql, plante.getPoint_de_vie(), plante.getAttaque_par_seconde(), plante.getDegat_attaque(), plante.getCout(), plante.getSoleil_par_seconde(), plante.getEffet(), plante.getChemin_image(), plante.getNom(), plante.getId_plante());
     }
 
 
@@ -66,7 +65,7 @@ public class PlanteDAO implements PlanteDAOInterface {
         @Override
         public PlanteEntity mapRow(ResultSet rs, int rowNum) throws SQLException {
             PlanteEntity plante = new PlanteEntity();
-            plante.setId(rs.getLong("id_plante"));
+            plante.setId_plante(rs.getLong("id_plante"));
             plante.setNom(rs.getString("nom"));
             plante.setPoint_de_vie(rs.getInt("point_de_vie"));
             plante.setAttaque_par_seconde(rs.getDouble("attaque_par_seconde"));

@@ -30,7 +30,7 @@ public class PlanteEntity {
     //Getter et setter
 
 
-    public Long getId() {
+    public Long getId_plante() {
         return id_plante;
     }
 
@@ -66,7 +66,7 @@ public class PlanteEntity {
         return chemin_image;
     }
 
-    public void setId(Long id_plante) {
+    public void setId_plante(Long id_plante) {
         this.id_plante = id_plante;
     }
 

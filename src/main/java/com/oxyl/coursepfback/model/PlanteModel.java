@@ -25,10 +25,10 @@ public class PlanteModel {
         this.chemin_image = chemin_image;
     }
 
-    public Long getId() {
+    public Long getId_plante() {
         return id_plante;
     }
-    public void setId(Long id_plante) {
+    public void setId_plante(Long id_plante) {
         this.id_plante = id_plante;
     }
     public String getNom() {

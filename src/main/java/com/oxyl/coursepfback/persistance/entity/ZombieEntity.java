@@ -23,10 +23,10 @@ public class ZombieEntity {
         this.id_map = id_map;
     }
 
-    public Long getId() {
+    public Long getId_zombie() {
         return id_zombie;
     }
-    public void setId(Long id_zombie) {
+    public void setId_zombie(Long id_zombie) {
         this.id_zombie = id_zombie;
     }
     public String getNom() {

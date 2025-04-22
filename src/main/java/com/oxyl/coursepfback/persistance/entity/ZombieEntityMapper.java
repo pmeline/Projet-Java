@@ -13,7 +13,7 @@ public class ZombieEntityMapper {
             return null;
         }
         ZombieModel model = new ZombieModel();
-        model.setId(entity.getId());
+        model.setId_zombie(entity.getId_zombie());
         model.setNom(entity.getNom());
         model.setPoint_de_vie(entity.getPoint_de_vie());
         model.setAttaque_par_seconde(entity.getAttaque_par_seconde());
@@ -30,7 +30,7 @@ public class ZombieEntityMapper {
             return null;
         }
         ZombieEntity entity = new ZombieEntity();
-        entity.setId(model.getId());
+        entity.setId_zombie(model.getId_zombie());
         entity.setNom(model.getNom());
         entity.setPoint_de_vie(model.getPoint_de_vie());
         entity.setAttaque_par_seconde(model.getAttaque_par_seconde());

@@ -26,11 +26,11 @@ public class PlanteDTO {
     }
 
     // Getters et Setters
-    public Long getId() {
+    public Long getId_plante() {
         return id_plante;
     }
 
-    public void setId(Long id_plante) {
+    public void setId_plante(Long id_plante) {
         this.id_plante = id_plante;
     }
 

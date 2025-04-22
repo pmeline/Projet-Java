@@ -15,13 +15,14 @@ public class ZombieDTOMapper {
         }
 
         ZombieDTO zombieDTO = new ZombieDTO();
-        zombieDTO.setId(zombieModel.getId());
+        zombieDTO.setId_zombie(zombieModel.getId_zombie());
         zombieDTO.setNom(zombieModel.getNom());
         zombieDTO.setPoint_de_vie(zombieModel.getPoint_de_vie());
         zombieDTO.setAttaque_par_seconde(zombieModel.getAttaque_par_seconde());
         zombieDTO.setDegat_attaque(zombieModel.getDegat_attaque());
         zombieDTO.setVitesse_de_deplacement(zombieModel.getVitesse_de_deplacement());
         zombieDTO.setChemin_image(zombieModel.getChemin_image());
+        zombieDTO.setId_map(zombieModel.getId_map());
         return zombieDTO;
     }
 
@@ -30,7 +31,7 @@ public class ZombieDTOMapper {
             return null;
         }
         ZombieModel zombieModel = new ZombieModel();
-        zombieModel.setId(zombieDTO.getId());
+        zombieModel.setId_zombie(zombieDTO.getId_zombie());
         zombieModel.setNom(zombieDTO.getNom());
         zombieModel.setPoint_de_vie(zombieDTO.getPoint_de_vie());
         zombieModel.setAttaque_par_seconde(zombieDTO.getAttaque_par_seconde());

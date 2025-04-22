@@ -49,7 +49,7 @@ public class MapService implements MapServiceInterface {
     public void deleteMap(Long id_map) {
         List<ZombieModel> zombieMap = zombieService.getZombiesByMapId(id_map);
         for (ZombieModel zombie : zombieMap) {
-            zombieService.deleteZombie(zombie.getId());
+            zombieService.deleteZombie(zombie.getId_zombie());
         }
         mapRepository.deleteMap(id_map);
     }

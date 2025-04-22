@@ -28,7 +28,7 @@ public class ZombieService implements ZombieServiceInterface {
             if (map == null) {
                 throw new IllegalArgumentException("La map avec l'id " + zombieModel.getId_map() + " n'existe pas.");
             }
-        }w
+        }
         zombieRepository.createZombie(zombieModel);
     }
 

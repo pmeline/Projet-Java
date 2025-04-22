@@ -14,7 +14,7 @@ public class PlanteEntityMapper {
             return null;
         }
         PlanteEntity entity = new PlanteEntity();
-        entity.setId(planteModel.getId());
+        entity.setId_plante(planteModel.getId_plante());
         entity.setNom(planteModel.getNom());
         entity.setPoint_de_vie(planteModel.getPoint_de_vie());
         entity.setAttaque_par_seconde(planteModel.getAttaque_par_seconde());
@@ -33,7 +33,7 @@ public class PlanteEntityMapper {
             return null;
         }
         return new PlanteModel(
-                planteEntity.getId(),
+                planteEntity.getId_plante(),
                 planteEntity.getNom(),
                 planteEntity.getPoint_de_vie(),
                 planteEntity.getAttaque_par_seconde(),

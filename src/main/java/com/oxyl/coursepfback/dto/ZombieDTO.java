@@ -26,11 +26,11 @@ public class ZombieDTO {
     }
 
     //getter et setter
-    public Long getId() {
+    public Long getId_zombie() {
         return id_zombie;
     }
 
-    public void setId(Long id_zombie) {
+    public void setId_zombie(Long id_zombie) {
         this.id_zombie = id_zombie;
     }
 

@@ -14,7 +14,7 @@ public class PlanteDTOMapper {
         }
 
         PlanteDTO planteDTO = new PlanteDTO();
-        planteDTO.setId(planteModel.getId());
+        planteDTO.setId_plante(planteModel.getId_plante());
         planteDTO.setNom(planteModel.getNom());
         planteDTO.setAttaque_par_seconde(planteModel.getAttaque_par_seconde());
         planteDTO.setCout(planteModel.getCout());
@@ -32,7 +32,7 @@ public class PlanteDTOMapper {
         }
 
         PlanteModel planteModel = new PlanteModel();
-        planteModel.setId(planteDTO.getId());
+        planteModel.setId_plante(planteDTO.getId_plante());
         planteModel.setNom(planteDTO.getNom());
         planteModel.setAttaque_par_seconde(planteDTO.getAttaque_par_seconde());
         planteModel.setCout(planteDTO.getCout());

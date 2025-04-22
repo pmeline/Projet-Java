@@ -29,8 +29,7 @@ public class ZombieDAO implements ZombieDAOInterface{
     @Override
     public ZombieEntity getZombie(Long id) {
         String sql = "SELECT * FROM zombie WHERE id_zombie = ?";
-        List<ZombieEntity> zombies = jdbcTemplate.query(sql, new ZombieRowMapper(), id);
-        return zombies.isEmpty() ? null : zombies.get(0);
+        return jdbcTemplate.queryForObject(sql, new ZombieRowMapper(), id);
     }
 
     @Override
@@ -49,7 +48,7 @@ public class ZombieDAO implements ZombieDAOInterface{
     @Override
     public void updateZombie(ZombieEntity zombie) {
         String sql = "UPDATE zombie SET nom = ?, point_de_vie = ?, attaque_par_seconde = ?, degat_attaque = ?, vitesse_de_deplacement = ?, chemin_image = ?, id_map = ? WHERE id_zombie = ?";
-        jdbcTemplate.update(sql, zombie.getNom(), zombie.getPoint_de_vie(), zombie.getAttaque_par_seconde(), zombie.getDegat_attaque(), zombie.getVitesse_de_deplacement(), zombie.getChemin_image(), zombie.getId_map(), zombie.getId());
+        jdbcTemplate.update(sql, zombie.getNom(), zombie.getPoint_de_vie(), zombie.getAttaque_par_seconde(), zombie.getDegat_attaque(), zombie.getVitesse_de_deplacement(), zombie.getChemin_image(), zombie.getId_map(), zombie.getId_zombie());
     }
 
     @Override
@@ -62,7 +61,7 @@ public class ZombieDAO implements ZombieDAOInterface{
         @Override
         public ZombieEntity mapRow(ResultSet rs, int rowNum) throws SQLException {
             ZombieEntity zombie = new ZombieEntity();
-            zombie.setId(rs.getLong("id_zombie"));
+            zombie.setId_zombie(rs.getLong("id_zombie"));
             zombie.setNom(rs.getString("nom"));
             zombie.setPoint_de_vie(rs.getInt("point_de_vie"));
             zombie.setAttaque_par_seconde(rs.getDouble("attaque_par_seconde"));
