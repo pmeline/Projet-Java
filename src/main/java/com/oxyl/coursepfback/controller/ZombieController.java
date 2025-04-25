@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/zombies")
@@ -38,24 +39,27 @@ public class ZombieController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> createZombie( @RequestBody ZombieDTO zombieDTO) {
+    public ResponseEntity<ZombieDTO> createZombie(@RequestBody ZombieDTO zombieDTO) {
         ZombieModel zombie = mapper.mapDTOToModel(zombieDTO);
         zombieService.createZombie(zombie);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(mapper.mapModelToDTO(zombie), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id_zombie}")
-    public ResponseEntity<Void> updateZombie(@PathVariable ("id_zombie") Long id_zombie,  @RequestBody ZombieDTO zombieDTO) {
+    public ResponseEntity<ZombieDTO> updateZombie(@PathVariable ("id_zombie") Long id_zombie, @RequestBody ZombieDTO zombieDTO) {
         ZombieModel zombie = mapper.mapDTOToModel(zombieDTO);
+        zombie.setId_zombie(id_zombie);
         zombieService.updateZombie(zombie);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(mapper.mapModelToDTO(zombie), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id_zombie}")
-    public ResponseEntity<Void> deleteZombie(@PathVariable ("id_zombie") Long id_zombie) {
-        zombieService.deleteZombie(id_zombie);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    public ResponseEntity<Object> deleteZombie(@PathVariable ("id_zombie") Long id_zombie) {
+        try {
+            zombieService.deleteZombie(id_zombie);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            return new ResponseEntity<>(Map.of("error", e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
-
-
 }

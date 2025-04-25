@@ -56,7 +56,21 @@ public class PlanteDAO implements PlanteDAOInterface {
     @Override
     public void updatePlante(PlanteEntity plante) {
         String sql = "UPDATE plante SET point_de_vie = ?, attaque_par_seconde = ?, degat_attaque = ?, cout = ?, soleil_par_seconde = ?, effet = ?, chemin_image = ?, nom = ? WHERE id_plante = ?";
-        jdbcTemplate.update(sql, plante.getPoint_de_vie(), plante.getAttaque_par_seconde(), plante.getDegat_attaque(), plante.getCout(), plante.getSoleil_par_seconde(), plante.getEffet(), plante.getChemin_image(), plante.getNom(), plante.getId_plante());
+        int rowsAffected = jdbcTemplate.update(sql, 
+            plante.getPoint_de_vie(), 
+            plante.getAttaque_par_seconde(), 
+            plante.getDegat_attaque(), 
+            plante.getCout(), 
+            plante.getSoleil_par_seconde(), 
+            plante.getEffet(), 
+            plante.getChemin_image(), 
+            plante.getNom(), 
+            plante.getId_plante()
+        );
+        
+        if (rowsAffected == 0) {
+            throw new IllegalArgumentException("La plante avec l'id " + plante.getId_plante() + " n'existe pas");
+        }
     }
 
 

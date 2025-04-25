@@ -25,10 +25,9 @@ public class MapController {
 
     @GetMapping
     public List<MapDTO> getAllMaps() {
-        List<MapModel> maps = mapService.getAllMaps(); // <== ici, MapModel
+        List<MapModel> maps = mapService.getAllMaps();
         return mapper.mapListModelsToDTO(maps);
     }
-
 
     @GetMapping("/{id_map}")
     public ResponseEntity<MapDTO> getMapById(@PathVariable ("id_map") Long id_map) {
@@ -40,17 +39,18 @@ public class MapController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> createMap( @RequestBody MapDTO mapDTO) {
+    public ResponseEntity<MapDTO> createMap(@RequestBody MapDTO mapDTO) {
         MapModel mapModel = mapper.mapDTOToModel(mapDTO);
         mapService.createMap(mapModel);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(mapper.mapModelToDTO(mapModel), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id_map}")
-    public ResponseEntity<Void> updateMap(@PathVariable ("id_map") Long id_map, @RequestBody MapDTO mapDTO) {
+    public ResponseEntity<MapDTO> updateMap(@PathVariable ("id_map") Long id_map, @RequestBody MapDTO mapDTO) {
         MapModel mapModel = mapper.mapDTOToModel(mapDTO);
+        mapModel.setId_map(id_map);
         mapService.updateMap(mapModel);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(mapper.mapModelToDTO(mapModel), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id_map}")
@@ -62,5 +62,4 @@ public class MapController {
             return new ResponseEntity<>(Map.of("error", e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
 }

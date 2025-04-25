@@ -13,7 +13,7 @@ import java.util.List;
 @Repository
 public class MapDAO implements MapDAOInterface {
 
-    private JdbcTemplate jdbcTemplate;
+    private final JdbcTemplate jdbcTemplate;
 
     @Autowired
     public MapDAO(JdbcTemplate jdbcTemplate) {
@@ -22,31 +22,46 @@ public class MapDAO implements MapDAOInterface {
 
     @Override
     public List<MapEntity> getAllMaps() {
-        String sql = "SELECT * FROM map";
+        String sql = "SELECT id_map, ligne, colonne, chemin_image FROM map";
         return jdbcTemplate.query(sql, new MapRowMapper());
     }
+
     @Override
     public MapEntity getMap(Long id) {
-        String sql = "SELECT * FROM map WHERE id_map = ?";
-        return jdbcTemplate.queryForObject(sql, new MapRowMapper(), id);
+        String sql = "SELECT id_map, ligne, colonne, chemin_image FROM map WHERE id_map = ?";
+        List<MapEntity> maps = jdbcTemplate.query(sql, new Object[]{id}, new int[]{java.sql.Types.BIGINT}, new MapRowMapper());
+        return maps.isEmpty() ? null : maps.get(0);
     }
 
     @Override
     public void createMap(MapEntity map) {
         String sql = "INSERT INTO map (ligne, colonne, chemin_image) VALUES (?, ?, ?)";
-        jdbcTemplate.update(sql, map.getLigne(), map.getColonne(), map.getChemin_image());
+        jdbcTemplate.update(sql,
+            map.getLigne(),
+            map.getColonne(),
+            map.getChemin_image()
+        );
     }
 
     @Override
     public void updateMap(MapEntity map) {
         String sql = "UPDATE map SET ligne = ?, colonne = ?, chemin_image = ? WHERE id_map = ?";
-        jdbcTemplate.update(sql, map.getLigne(), map.getColonne(), map.getChemin_image(), map.getId_map());
+        int rowsAffected = jdbcTemplate.update(sql,
+            map.getLigne(),
+            map.getColonne(),
+            map.getChemin_image(),
+            map.getId_map()
+        );
+        
+        if (rowsAffected == 0) {
+            throw new IllegalArgumentException("La map avec l'id " + map.getId_map() + " n'existe pas");
+        }
     }
 
     @Override
     public void deleteMap(Long id) {
         String sql = "DELETE FROM map WHERE id_map = ?";
-        jdbcTemplate.update(sql, id);
+        jdbcTemplate.update(sql, new Object[]{id}, new int[]{java.sql.Types.BIGINT});
     }
 
     private static class MapRowMapper implements RowMapper<MapEntity> {

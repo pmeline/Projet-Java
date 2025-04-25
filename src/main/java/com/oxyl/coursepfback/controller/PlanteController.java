@@ -1,34 +1,33 @@
 package com.oxyl.coursepfback.controller;
 
+import com.oxyl.coursepfback.dto.PlanteDTO;
 import com.oxyl.coursepfback.dto.PlanteDTOMapper;
 import com.oxyl.coursepfback.model.PlanteModel;
 import com.oxyl.coursepfback.service.PlanteService;
-import com.oxyl.coursepfback.dto.PlanteDTO;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/plantes")
 public class PlanteController {
 
     private final PlanteService planteService;
-    private final PlanteDTOMapper planteDTOMapper;
+    private final PlanteDTOMapper mapper;
 
-    @Autowired
-    public PlanteController(PlanteService planteService, PlanteDTOMapper planteDTOMapper) {
+    public PlanteController(PlanteService planteService, PlanteDTOMapper mapper) {
         this.planteService = planteService;
-        this.planteDTOMapper = planteDTOMapper;
+        this.mapper = mapper;
     }
 
     @GetMapping
     public List<PlanteDTO> getAllPlantes() {
         List<PlanteModel> plantes = planteService.getAllPlantes();
-        return planteDTOMapper.mapListModelsToDTO(plantes);
+        return mapper.mapListModelsToDTO(plantes);
     }
 
     @GetMapping("/{id_plante}")
@@ -37,26 +36,31 @@ public class PlanteController {
         if (plante == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(planteDTOMapper.mapModelToDTO(plante), HttpStatus.OK);
+        return new ResponseEntity<>(mapper.mapModelToDTO(plante), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<Void> createPlante( @RequestBody PlanteDTO planteDTO) {
-        PlanteModel planteModel = planteDTOMapper.mapDTOToModel(planteDTO);
-        planteService.createPlante(planteModel);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+    public ResponseEntity<PlanteDTO> createPlante(@RequestBody PlanteDTO planteDTO) {
+        PlanteModel plante = mapper.mapDTOToModel(planteDTO);
+        planteService.createPlante(plante);
+        return new ResponseEntity<>(mapper.mapModelToDTO(plante), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id_plante}")
-    public ResponseEntity<Void> updatePlante(@PathVariable ("id_plante") Long id_plante,  @RequestBody PlanteDTO planteDTO) {
-        PlanteModel planteModel = planteDTOMapper.mapDTOToModel(planteDTO);
-        planteService.updatePlante(planteModel);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<PlanteDTO> updatePlante(@PathVariable ("id_plante") Long id_plante, @RequestBody PlanteDTO planteDTO) {
+        PlanteModel plante = mapper.mapDTOToModel(planteDTO);
+        plante.setId_plante(id_plante);
+        planteService.updatePlante(plante);
+        return new ResponseEntity<>(mapper.mapModelToDTO(plante), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id_plante}")
-    public ResponseEntity<Void> deletePlante(@PathVariable ("id_plante") Long id_plante) {
-        planteService.deletePlante(id_plante);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    public ResponseEntity<Object> deletePlante(@PathVariable ("id_plante") Long id_plante) {
+        try {
+            planteService.deletePlante(id_plante);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            return new ResponseEntity<>(Map.of("error", e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

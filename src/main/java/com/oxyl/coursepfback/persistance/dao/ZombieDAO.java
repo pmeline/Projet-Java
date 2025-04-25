@@ -29,7 +29,8 @@ public class ZombieDAO implements ZombieDAOInterface{
     @Override
     public ZombieEntity getZombie(Long id) {
         String sql = "SELECT * FROM zombie WHERE id_zombie = ?";
-        return jdbcTemplate.queryForObject(sql, new ZombieRowMapper(), id);
+        List<ZombieEntity> zombies = jdbcTemplate.query(sql, new ZombieRowMapper(), id);
+        return zombies.isEmpty() ? null : zombies.get(0);
     }
 
     @Override
@@ -37,7 +38,6 @@ public class ZombieDAO implements ZombieDAOInterface{
         String sql = "SELECT * FROM zombie WHERE id_map = ?";
         return jdbcTemplate.query(sql, new ZombieRowMapper(), id_map);
     }
-
 
     @Override
     public void createZombie(ZombieEntity zombie) {
@@ -48,7 +48,20 @@ public class ZombieDAO implements ZombieDAOInterface{
     @Override
     public void updateZombie(ZombieEntity zombie) {
         String sql = "UPDATE zombie SET nom = ?, point_de_vie = ?, attaque_par_seconde = ?, degat_attaque = ?, vitesse_de_deplacement = ?, chemin_image = ?, id_map = ? WHERE id_zombie = ?";
-        jdbcTemplate.update(sql, zombie.getNom(), zombie.getPoint_de_vie(), zombie.getAttaque_par_seconde(), zombie.getDegat_attaque(), zombie.getVitesse_de_deplacement(), zombie.getChemin_image(), zombie.getId_map(), zombie.getId_zombie());
+        int rowsAffected = jdbcTemplate.update(sql,
+            zombie.getNom(),
+            zombie.getPoint_de_vie(),
+            zombie.getAttaque_par_seconde(),
+            zombie.getDegat_attaque(),
+            zombie.getVitesse_de_deplacement(),
+            zombie.getChemin_image(),
+            zombie.getId_map(),
+            zombie.getId_zombie()
+        );
+        
+        if (rowsAffected == 0) {
+            throw new IllegalArgumentException("Le zombie avec l'id " + zombie.getId_zombie() + " n'existe pas");
+        }
     }
 
     @Override
