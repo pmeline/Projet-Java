@@ -14,9 +14,11 @@ com\oxyl\coursepfback\controller\MapController.class
 com\oxyl\coursepfback\persistance\repository\MapRepository.class
 com\oxyl\coursepfback\persistance\repository\PlanteRepository.class
 com\oxyl\coursepfback\service\PlanteService.class
+com\oxyl\coursepfback\exception\NotFoundException.class
 com\oxyl\coursepfback\persistance\dao\PlanteDAOInterface.class
 com\oxyl\coursepfback\persistance\dao\PlanteDAO.class
 com\oxyl\coursepfback\persistance\dao\MapDAOInterface.class
+com\oxyl\coursepfback\exception\ValidationException.class
 com\oxyl\coursepfback\controller\ZombieController.class
 com\oxyl\coursepfback\persistance\repository\ZombieRepository.class
 com\oxyl\coursepfback\persistance\dao\MapDAO$MapRowMapper.class
@@ -25,7 +27,9 @@ com\oxyl\coursepfback\model\MapModel.class
 com\oxyl\coursepfback\persistance\entity\ZombieEntity.class
 com\oxyl\coursepfback\persistance\entity\MapEntityMapper.class
 com\oxyl\coursepfback\persistance\dao\PlanteDAO$PlanteRowMapper.class
+com\oxyl\coursepfback\dto\ErrorResponse.class
 com\oxyl\coursepfback\dto\ZombieDTOMapper.class
+com\oxyl\coursepfback\exception\GlobalExceptionHandler.class
 com\oxyl\coursepfback\model\ZombieModel.class
 com\oxyl\coursepfback\service\ZombieServiceInterface.class
 com\oxyl\coursepfback\persistance\dao\ZombieDAO.class
