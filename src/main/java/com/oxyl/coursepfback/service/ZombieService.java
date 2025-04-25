@@ -1,6 +1,5 @@
 package com.oxyl.coursepfback.service;
 
-import com.oxyl.coursepfback.model.MapModel;
 import com.oxyl.coursepfback.model.ZombieModel;
 import com.oxyl.coursepfback.persistance.repository.ZombieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +8,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Service gérant les opérations liées aux zombies
+ */
 @Service
 public class ZombieService implements ZombieServiceInterface {
 
@@ -21,6 +23,11 @@ public class ZombieService implements ZombieServiceInterface {
         this.mapService = mapService;
     }
 
+    /**
+     * Crée un nouveau zombie
+     * @param zombieModel le zombie à créer
+     * @throws IllegalArgumentException si les données du zombie sont invalides
+     */
     @Override
     public void createZombie(ZombieModel zombieModel) {
         if (zombieModel == null) {
@@ -45,12 +52,17 @@ public class ZombieService implements ZombieServiceInterface {
             throw new IllegalArgumentException("L'id de la map ne peut pas être null");
         }
         
-        // Vérifie si la map existe
         mapService.getMap(zombieModel.getId_map());
         
         zombieRepository.createZombie(zombieModel);
     }
 
+    /**
+     * Récupère un zombie par son identifiant
+     * @param id_zombie l'identifiant du zombie
+     * @return le zombie correspondant
+     * @throws IllegalArgumentException si l'identifiant est null ou si le zombie n'existe pas
+     */
     @Override
     public ZombieModel getZombie(Long id_zombie) {
         if (id_zombie == null) {
@@ -63,17 +75,26 @@ public class ZombieService implements ZombieServiceInterface {
         return zombie;
     }
 
+    /**
+     * Récupère tous les zombies
+     * @return la liste de tous les zombies
+     */
     @Override
     public List<ZombieModel> getAllZombies() {
         return zombieRepository.getAllZombies();
     }
 
+    /**
+     * Récupère tous les zombies d'une map
+     * @param id_map l'identifiant de la map
+     * @return la liste des zombies de la map
+     * @throws IllegalArgumentException si l'identifiant de la map est null ou si la map n'existe pas
+     */
     @Override
     public List<ZombieModel> getZombiesByMapId(Long id_map) {
         if (id_map == null) {
             throw new IllegalArgumentException("L'id de la map ne peut pas être null");
         }
-        // Vérifie si la map existe
         mapService.getMap(id_map);
         
         List<ZombieModel> zombies = zombieRepository.getZombiesByMapId(id_map);
@@ -83,16 +104,19 @@ public class ZombieService implements ZombieServiceInterface {
         return zombies;
     }
 
+    /**
+     * Met à jour un zombie existant
+     * @param zombieModel le zombie avec les nouvelles données
+     * @throws IllegalArgumentException si les données sont invalides
+     */
     @Override
     public void updateZombie(ZombieModel zombieModel) {
         if (zombieModel == null) {
             throw new IllegalArgumentException("Le zombie ne peut pas être null");
         }
         
-        // Récupère le zombie existant
         ZombieModel existingZombie = getZombie(zombieModel.getId_zombie());
         
-        // Met à jour uniquement les champs non null
         if (zombieModel.getNom() != null && !zombieModel.getNom().trim().isEmpty()) {
             existingZombie.setNom(zombieModel.getNom());
         }
@@ -127,13 +151,17 @@ public class ZombieService implements ZombieServiceInterface {
         zombieRepository.updateZombie(existingZombie);
     }
 
+    /**
+     * Supprime un zombie
+     * @param id_zombie l'identifiant du zombie à supprimer
+     * @throws IllegalArgumentException si l'identifiant est null ou si le zombie n'existe pas
+     */
     @Override
     public void deleteZombie(Long id_zombie) {
         if (id_zombie == null) {
             throw new IllegalArgumentException("L'id du zombie ne peut pas être null");
         }
         
-        // Vérifie si le zombie existe
         ZombieModel existingZombie = zombieRepository.getZombie(id_zombie);
         if (existingZombie == null) {
             throw new IllegalArgumentException("Le zombie avec l'id " + id_zombie + " n'existe pas");

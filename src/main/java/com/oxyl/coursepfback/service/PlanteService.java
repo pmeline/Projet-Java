@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Service gérant les opérations liées aux plantes
+ */
 @Service
 public class PlanteService implements PlanteServiceInterface {
 
@@ -17,6 +20,11 @@ public class PlanteService implements PlanteServiceInterface {
         this.planteRepository = planteRepository;
     }
 
+    /**
+     * Crée une nouvelle plante
+     * @param planteModel la plante à créer
+     * @throws IllegalArgumentException si les données de la plante sont invalides
+     */
     @Override
     public void createPlante(PlanteModel planteModel) {
         if (planteModel == null) {
@@ -44,6 +52,12 @@ public class PlanteService implements PlanteServiceInterface {
         planteRepository.createPlante(planteModel);
     }
 
+    /**
+     * Récupère une plante par son identifiant
+     * @param id_plante l'identifiant de la plante
+     * @return la plante correspondante
+     * @throws IllegalArgumentException si l'identifiant est null ou si la plante n'existe pas
+     */
     @Override
     public PlanteModel getPlante(Long id_plante) {
         if (id_plante == null) {
@@ -56,21 +70,28 @@ public class PlanteService implements PlanteServiceInterface {
         return plante;
     }
 
+    /**
+     * Récupère toutes les plantes
+     * @return la liste de toutes les plantes
+     */
     @Override
     public List<PlanteModel> getAllPlantes() {
         return planteRepository.getAllPlantes();
     }
 
+    /**
+     * Met à jour une plante existante
+     * @param planteModel la plante avec les nouvelles données
+     * @throws IllegalArgumentException si les données sont invalides
+     */
     @Override
     public void updatePlante(PlanteModel planteModel) {
         if (planteModel == null) {
             throw new IllegalArgumentException("La plante ne peut pas être null");
         }
         
-        // Récupère la plante existante
         PlanteModel existingPlante = getPlante(planteModel.getId_plante());
         
-        // Met à jour uniquement les champs non null
         if (planteModel.getNom() != null && !planteModel.getNom().trim().isEmpty()) {
             existingPlante.setNom(planteModel.getNom());
         }
@@ -114,13 +135,17 @@ public class PlanteService implements PlanteServiceInterface {
         planteRepository.updatePlante(existingPlante);
     }
 
+    /**
+     * Supprime une plante
+     * @param id_plante l'identifiant de la plante à supprimer
+     * @throws IllegalArgumentException si l'identifiant est null ou si la plante n'existe pas
+     */
     @Override
     public void deletePlante(Long id_plante) {
         if (id_plante == null) {
             throw new IllegalArgumentException("L'id de la plante ne peut pas être null");
         }
         
-        // Vérifie si la plante existe
         PlanteModel existingPlante = planteRepository.getPlante(id_plante);
         if (existingPlante == null) {
             throw new IllegalArgumentException("La plante avec l'id " + id_plante + " n'existe pas");

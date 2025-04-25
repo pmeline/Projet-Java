@@ -6,9 +6,17 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Mapper pour convertir entre ZombieModel et ZombieDTO
+ */
 @Component
 public class ZombieDTOMapper {
 
+    /**
+     * Convertit un ZombieModel en ZombieDTO
+     * @param zombieModel le modèle à convertir
+     * @return le DTO converti
+     */
     public ZombieDTO mapModelToDTO(ZombieModel zombieModel) {
         if (zombieModel == null) {
             return null;
@@ -26,6 +34,11 @@ public class ZombieDTOMapper {
         return zombieDTO;
     }
 
+    /**
+     * Convertit un ZombieDTO en ZombieModel
+     * @param zombieDTO le DTO à convertir
+     * @return le modèle converti
+     */
     public ZombieModel mapDTOToModel(ZombieDTO zombieDTO) {
         if (zombieDTO == null) {
             return null;
@@ -42,6 +55,11 @@ public class ZombieDTOMapper {
         return zombieModel;
     }
 
+    /**
+     * Convertit une liste de ZombieModel en une liste de ZombieDTO
+     * @param zombieModels la liste de modèles à convertir
+     * @return la liste de DTOs convertie
+     */
     public List<ZombieDTO> mapListModelToDTO(List<ZombieModel> zombieModels) {
         if (zombieModels == null) {
             return null;

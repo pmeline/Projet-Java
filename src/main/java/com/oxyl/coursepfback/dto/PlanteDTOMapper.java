@@ -5,9 +5,17 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+/**
+ * Mapper pour convertir entre PlanteModel et PlanteDTO
+ */
 @Component
 public class PlanteDTOMapper {
 
+    /**
+     * Convertit un PlanteModel en PlanteDTO
+     * @param planteModel le modèle à convertir
+     * @return le DTO converti
+     */
     public PlanteDTO mapModelToDTO(PlanteModel planteModel){
         if (planteModel == null){
             return null;
@@ -26,6 +34,11 @@ public class PlanteDTOMapper {
         return planteDTO;
     }
 
+    /**
+     * Convertit un PlanteDTO en PlanteModel
+     * @param planteDTO le DTO à convertir
+     * @return le modèle converti
+     */
     public PlanteModel mapDTOToModel(PlanteDTO planteDTO) {
         if (planteDTO == null) {
             return null;
@@ -44,6 +57,11 @@ public class PlanteDTOMapper {
         return planteModel;
     }
 
+    /**
+     * Convertit une liste de PlanteModel en une liste de PlanteDTO
+     * @param planteModels la liste de modèles à convertir
+     * @return la liste de DTOs convertie
+     */
     public List<PlanteDTO> mapListModelsToDTO(List<PlanteModel> planteModels){
         if (planteModels == null){
             return null;
@@ -52,7 +70,4 @@ public class PlanteDTOMapper {
                 .map(this::mapModelToDTO)
                 .toList();
     }
-
-
-
 }

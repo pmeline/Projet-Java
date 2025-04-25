@@ -5,10 +5,17 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+/**
+ * Mapper pour convertir entre PlanteEntity et PlanteModel
+ */
 @Component
 public class PlanteEntityMapper {
 
-    // mapper de model vers entité
+    /**
+     * Convertit un PlanteModel en PlanteEntity
+     * @param planteModel le modèle à convertir
+     * @return l'entité convertie
+     */
     public PlanteEntity mapModelToEntity(PlanteModel planteModel) {
         if (planteModel == null) {
             return null;
@@ -26,8 +33,11 @@ public class PlanteEntityMapper {
         return entity;
     }
 
-
-    //mapper d'entité vers model
+    /**
+     * Convertit une PlanteEntity en PlanteModel
+     * @param planteEntity l'entité à convertir
+     * @return le modèle converti
+     */
     public PlanteModel mapEntityToModel(PlanteEntity planteEntity) {
         if (planteEntity == null) {
             return null;
@@ -45,6 +55,11 @@ public class PlanteEntityMapper {
         );
     }
 
+    /**
+     * Convertit une liste de PlanteEntity en une liste de PlanteModel
+     * @param planteEntities la liste d'entités à convertir
+     * @return la liste de modèles convertie
+     */
     public List<PlanteModel> mapEntitiesToModels(List<PlanteEntity> planteEntities) {
         return planteEntities.stream()
                 .map(this::mapEntityToModel)

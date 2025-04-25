@@ -1,5 +1,8 @@
 package com.oxyl.coursepfback.persistance.entity;
 
+/**
+ * Entité représentant une plante dans la base de données
+ */
 public class PlanteEntity {
     private Long id_plante;
     private String nom;
@@ -11,10 +14,25 @@ public class PlanteEntity {
     private String effet;
     private String chemin_image;
 
+    /**
+     * Constructeur par défaut
+     */
     public PlanteEntity() {
 
     }
 
+    /**
+     * Constructeur avec tous les paramètres
+     * @param id_plante l'identifiant unique de la plante
+     * @param nom le nom de la plante
+     * @param point_de_vie les points de vie de la plante
+     * @param attaque_par_seconde la fréquence d'attaque de la plante
+     * @param degat_attaque les dégâts infligés par la plante
+     * @param cout le coût en soleil de la plante
+     * @param soleil_par_seconde la production de soleil par seconde
+     * @param effet l'effet spécial de la plante
+     * @param chemin_image le chemin de l'image de la plante
+     */
     public PlanteEntity(Long id_plante, String nom, Integer point_de_vie, Double attaque_par_seconde, Integer degat_attaque, Integer cout, Double soleil_par_seconde, String effet, String chemin_image) {
         this.id_plante = id_plante;
         this.nom = nom;
@@ -27,77 +45,128 @@ public class PlanteEntity {
         this.chemin_image = chemin_image;
     }
 
-    //Getter et setter
-
-
+    /**
+     * @return l'identifiant unique de la plante
+     */
     public Long getId_plante() {
         return id_plante;
     }
 
+    /**
+     * @return le nom de la plante
+     */
     public String getNom() {
         return nom;
     }
 
+    /**
+     * @return les points de vie de la plante
+     */
     public Integer getPoint_de_vie() {
         return point_de_vie;
     }
 
+    /**
+     * @return la fréquence d'attaque de la plante
+     */
     public Double getAttaque_par_seconde() {
         return attaque_par_seconde;
     }
 
+    /**
+     * @return les dégâts infligés par la plante
+     */
     public Integer getDegat_attaque() {
         return degat_attaque;
     }
 
+    /**
+     * @return le coût en soleil de la plante
+     */
     public Integer getCout() {
         return cout;
     }
 
+    /**
+     * @return la production de soleil par seconde
+     */
     public Double getSoleil_par_seconde() {
         return soleil_par_seconde;
     }
 
+    /**
+     * @return l'effet spécial de la plante
+     */
     public String getEffet() {
         return effet;
     }
 
+    /**
+     * @return le chemin de l'image de la plante
+     */
     public String getChemin_image() {
         return chemin_image;
     }
 
+    /**
+     * @param id_plante l'identifiant unique de la plante à définir
+     */
     public void setId_plante(Long id_plante) {
         this.id_plante = id_plante;
     }
 
+    /**
+     * @param nom le nom de la plante à définir
+     */
     public void setNom(String nom) {
         this.nom = nom;
     }
 
+    /**
+     * @param point_de_vie les points de vie de la plante à définir
+     */
     public void setPoint_de_vie(Integer point_de_vie) {
         this.point_de_vie = point_de_vie;
     }
 
+    /**
+     * @param attaque_par_seconde la fréquence d'attaque de la plante à définir
+     */
     public void setAttaque_par_seconde(Double attaque_par_seconde) {
         this.attaque_par_seconde = attaque_par_seconde;
     }
 
+    /**
+     * @param degat_attaque les dégâts infligés par la plante à définir
+     */
     public void setDegat_attaque(Integer degat_attaque) {
         this.degat_attaque = degat_attaque;
     }
 
+    /**
+     * @param cout le coût en soleil de la plante à définir
+     */
     public void setCout(Integer cout) {
         this.cout = cout;
     }
 
+    /**
+     * @param soleil_par_seconde la production de soleil par seconde à définir
+     */
     public void setSoleil_par_seconde(Double soleil_par_seconde) {
         this.soleil_par_seconde = soleil_par_seconde;
     }
 
+    /**
+     * @param effet l'effet spécial de la plante à définir
+     */
     public void setEffet(String effet) {
         this.effet = effet;
     }
 
+    /**
+     * @param chemin_image le chemin de l'image de la plante à définir
+     */
     public void setChemin_image(String chemin_image) {
         this.chemin_image = chemin_image;
     }
