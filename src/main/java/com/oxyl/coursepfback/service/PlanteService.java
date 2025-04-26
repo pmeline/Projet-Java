@@ -49,9 +49,9 @@ public class PlanteService implements PlanteServiceInterface {
             logger.error("Tentative de création d'une plante avec une attaque par seconde négative: {}", planteModel.getAttaque_par_seconde());
             throw new ValidationException("L'attaque par seconde doit être positive");
         }
-        if (planteModel.getDegat_attaque() <= 0) {
+        if (planteModel.getDegat_attaque() < 0) {
             logger.error("Tentative de création d'une plante avec des dégâts d'attaque négatifs: {}", planteModel.getDegat_attaque());
-            throw new ValidationException("Les dégâts d'attaque doivent être positifs");
+            throw new ValidationException("Les dégâts d'attaque ne peuvent pas être négatifs");
         }
         if (planteModel.getCout() <= 0) {
             logger.error("Tentative de création d'une plante avec un coût négatif: {}", planteModel.getCout());
@@ -154,7 +154,7 @@ public class PlanteService implements PlanteServiceInterface {
         }
 
         if (planteModel.getAttaque_par_seconde() != null) {
-            if (planteModel.getAttaque_par_seconde() <= 0) {
+            if (planteModel.getAttaque_par_seconde() < 0) {
                 logger.error("Tentative de mise à jour d'une plante avec une attaque par seconde invalide: {}", planteModel.getAttaque_par_seconde());
                 throw new ValidationException("L'attaque par seconde doit être strictement positive");
             }
@@ -166,9 +166,9 @@ public class PlanteService implements PlanteServiceInterface {
         }
 
         if (planteModel.getDegat_attaque() != null) {
-            if (planteModel.getDegat_attaque() <= 0) {
+            if (planteModel.getDegat_attaque() < 0) {
                 logger.error("Tentative de mise à jour d'une plante avec des dégâts d'attaque invalides: {}", planteModel.getDegat_attaque());
-                throw new ValidationException("Les dégâts d'attaque doivent être strictement positifs");
+                throw new ValidationException("Les dégâts d'attaque ne peuvent pas être négatifs");
             }
             if (planteModel.getDegat_attaque() > 100) {
                 logger.error("Tentative de mise à jour d'une plante avec des dégâts d'attaque trop élevés: {}", planteModel.getDegat_attaque());

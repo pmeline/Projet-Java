@@ -72,6 +72,14 @@ class PlanteServiceTest {
     }
 
     @Test
+    void createPlante_withZeroDegatAttaque_shouldSucceed() {
+        planteModel.setDegat_attaque(0);
+        doNothing().when(planteRepository).createPlante(any(PlanteModel.class));
+        assertDoesNotThrow(() -> planteService.createPlante(planteModel));
+        verify(planteRepository).createPlante(planteModel);
+    }
+
+    @Test
     void createPlante_withInvalidDegatAttaque_shouldThrowValidationException() {
         planteModel.setDegat_attaque(-10);
         assertThrows(ValidationException.class, () -> planteService.createPlante(planteModel));
@@ -234,6 +242,19 @@ class PlanteServiceTest {
         planteModel.setAttaque_par_seconde(-1.0);
         assertThrows(ValidationException.class, () -> planteService.updatePlante(planteModel));
         verify(planteRepository, never()).updatePlante(any());
+    }
+
+    @Test
+    void updatePlante_withZeroDegatAttaque_shouldSucceed() {
+        when(planteRepository.getPlante(1L)).thenReturn(planteModel);
+        doNothing().when(planteRepository).updatePlante(any(PlanteModel.class));
+        
+        PlanteModel update = new PlanteModel();
+        update.setId_plante(1L);
+        update.setDegat_attaque(0);
+        
+        assertDoesNotThrow(() -> planteService.updatePlante(update));
+        verify(planteRepository).updatePlante(any(PlanteModel.class));
     }
 
     @Test

@@ -4,13 +4,16 @@ import com.oxyl.coursepfback.dto.PlanteDTO;
 import com.oxyl.coursepfback.dto.PlanteDTOMapper;
 import com.oxyl.coursepfback.model.PlanteModel;
 import com.oxyl.coursepfback.service.PlanteService;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.HashMap;
+import java.util.ArrayList;
 
 /**
  * Contrôleur gérant les requêtes HTTP liées aux plantes
@@ -19,10 +22,12 @@ import java.util.Map;
 @RequestMapping("/plantes")
 public class PlanteController {
 
+    private static final Logger logger = LoggerFactory.getLogger(PlanteController.class);
     private final PlanteService planteService;
     private final PlanteDTOMapper mapper;
 
     public PlanteController(PlanteService planteService, PlanteDTOMapper mapper) {
+        logger.info("Initialisation du PlanteController");
         this.planteService = planteService;
         this.mapper = mapper;
     }
@@ -95,5 +100,71 @@ public class PlanteController {
                 HttpStatus.INTERNAL_SERVER_ERROR
             );
         }
+    }
+
+    @GetMapping("/validation")
+    public ResponseEntity<Map<String, Object>> getValidationExample() {
+        logger.info("Appel de l'endpoint /plantes/validation");
+        List<PlanteDTO> plantes = getAllPlantes();
+        logger.info("Nombre de plantes trouvées : {}", plantes.size());
+        
+        Map<String, Object> validationResult = new HashMap<>();
+        List<String> errors = new ArrayList<>();
+        
+        if (plantes.isEmpty()) {
+            logger.warn("Aucune plante trouvée");
+            errors.add("Aucune plante trouvée dans la base de données");
+        } else {
+            // Validation de chaque plante
+            for (PlanteDTO plante : plantes) {
+                // Validation des champs obligatoires
+                if (plante.getId_plante() == null) {
+                    errors.add("ID de plante manquant pour la plante " + plante.getNom());
+                }
+                if (plante.getNom() == null || plante.getNom().isEmpty()) {
+                    errors.add("Nom de plante manquant pour la plante ID " + plante.getId_plante());
+                }
+                if (plante.getPoint_de_vie() == null) {
+                    errors.add("Points de vie manquants pour la plante " + plante.getNom());
+                }
+                if (plante.getAttaque_par_seconde() == null) {
+                    errors.add("Attaque par seconde manquante pour la plante " + plante.getNom());
+                }
+                if (plante.getDegat_attaque() == null) {
+                    errors.add("Dégâts d'attaque manquants pour la plante " + plante.getNom());
+                }
+                if (plante.getCout() == null) {
+                    errors.add("Coût manquant pour la plante " + plante.getNom());
+                }
+                if (plante.getSoleil_par_seconde() == null) {
+                    errors.add("Soleil par seconde manquant pour la plante " + plante.getNom());
+                }
+                if (plante.getEffet() == null || plante.getEffet().isEmpty()) {
+                    errors.add("Effet manquant pour la plante " + plante.getNom());
+                }
+                if (plante.getChemin_image() == null || plante.getChemin_image().isEmpty()) {
+                    errors.add("Chemin de l'image manquant pour la plante " + plante.getNom());
+                }
+
+                // Validation des contraintes métier
+                if (plante.getPoint_de_vie() != null && plante.getPoint_de_vie() <= 0) {
+                    errors.add("Points de vie doivent être positifs pour la plante " + plante.getNom());
+                }
+                if (plante.getDegat_attaque() != null && plante.getDegat_attaque() < 0) {
+                    errors.add("Dégâts d'attaque ne peuvent pas être négatifs pour la plante " + plante.getNom());
+                }
+                if (plante.getCout() != null && plante.getCout() <= 0) {
+                    errors.add("Coût doit être positif pour la plante " + plante.getNom());
+                }
+            }
+        }
+
+        validationResult.put("valid", errors.isEmpty());
+        validationResult.put("message", errors.isEmpty() ? "Toutes les plantes sont valides" : "Erreurs de validation détectées");
+        validationResult.put("errors", errors);
+        validationResult.put("total_plantes", plantes.size());
+        
+        logger.info("Résultat de la validation : {}", validationResult);
+        return ResponseEntity.ok(validationResult);
     }
 }

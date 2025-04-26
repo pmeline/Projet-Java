@@ -95,4 +95,13 @@ public class MapController {
             );
         }
     }
+
+    @GetMapping("/validation")
+    public ResponseEntity<MapDTO> getValidationExample() {
+        List<MapDTO> maps = getAllMaps();
+        if (maps.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.ok(maps.get(0));
+    }
 }
