@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.oxyl.coursepfback.service.MapServiceTest" time="3.037" tests="29" errors="0" skipped="0" failures="0">
+  <properties>
+    <property name="java.specification.version" value="21"/>
+    <property name="sun.cpu.isalist" value="amd64"/>
+    <property name="sun.jnu.encoding" value="Cp1252"/>
+    <property name="java.class.path" value="D:\Document\Etude sup\4A\JAVA\projet_pvz_fonctionnel\projet_pvz\target\test-classes;D:\Document\Etude sup\4A\JAVA\projet_pvz_fonctionnel\projet_pvz\target\classes;C:\Users\melin\.m2\repository\org\springframework\spring-webmvc\6.2.2\spring-webmvc-6.2.2.jar;C:\Users\melin\.m2\repository\org\springframework\spring-aop\6.2.2\spring-aop-6.2.2.jar;C:\Users\melin\.m2\repository\org\springframework\spring-beans\6.2.2\spring-beans-6.2.2.jar;C:\Users\melin\.m2\repository\org\springframework\spring-context\6.2.2\spring-context-6.2.2.jar;C:\Users\melin\.m2\repository\io\micrometer\micrometer-observation\1.14.3\micrometer-observation-1.14.3.jar;C:\Users\melin\.m2\repository\io\micrometer\micrometer-commons\1.14.3\micrometer-commons-1.14.3.jar;C:\Users\melin\.m2\repository\org\springframework\spring-core\6.2.2\spring-core-6.2.2.jar;C:\Users\melin\.m2\repository\org\springframework\spring-jcl\6.2.2\spring-jcl-6.2.2.jar;C:\Users\melin\.m2\repository\org\springframework\spring-expression\6.2.2\spring-expression-6.2.2.jar;C:\Users\melin\.m2\repository\org\springframework\spring-web\6.2.2\spring-web-6.2.2.jar;C:\Users\melin\.m2\repository\org\springframework\spring-jdbc\6.1.13\spring-jdbc-6.1.13.jar;C:\Users\melin\.m2\repository\org\springframework\spring-tx\6.1.13\spring-tx-6.1.13.jar;C:\Users\melin\.m2\repository\com\mysql\mysql-connector-j\8.0.33\mysql-connector-j-8.0.33.jar;C:\Users\melin\.m2\repository\com\google\protobuf\protobuf-java\3.21.9\protobuf-java-3.21.9.jar;C:\Users\melin\.m2\repository\com\fasterxml\jackson\core\jackson-databind\2.18.2\jackson-databind-2.18.2.jar;C:\Users\melin\.m2\repository\com\fasterxml\jackson\core\jackson-annotations\2.18.2\jackson-annotations-2.18.2.jar;C:\Users\melin\.m2\repository\com\fasterxml\jackson\core\jackson-core\2.18.2\jackson-core-2.18.2.jar;C:\Users\melin\.m2\repository\jakarta\servlet\jakarta.servlet-api\6.1.0\jakarta.servlet-api-6.1.0.jar;C:\Users\melin\.m2\repository\ch\qos\logback\logback-classic\1.5.16\logback-classic-1.5.16.jar;C:\Users\melin\.m2\repository\ch\qos\logback\logback-core\1.5.16\logback-core-1.5.16.jar;C:\Users\melin\.m2\repository\org\slf4j\slf4j-api\2.0.16\slf4j-api-2.0.16.jar;C:\Users\melin\.m2\repository\org\junit\jupiter\junit-jupiter\5.10.1\junit-jupiter-5.10.1.jar;C:\Users\melin\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.10.1\junit-jupiter-api-5.10.1.jar;C:\Users\melin\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;C:\Users\melin\.m2\repository\org\junit\platform\junit-platform-commons\1.10.1\junit-platform-commons-1.10.1.jar;C:\Users\melin\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\melin\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.10.1\junit-jupiter-params-5.10.1.jar;C:\Users\melin\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.10.1\junit-jupiter-engine-5.10.1.jar;C:\Users\melin\.m2\repository\org\junit\platform\junit-platform-engine\1.10.1\junit-platform-engine-1.10.1.jar;C:\Users\melin\.m2\repository\org\mockito\mockito-core\5.7.0\mockito-core-5.7.0.jar;C:\Users\melin\.m2\repository\net\bytebuddy\byte-buddy\1.14.9\byte-buddy-1.14.9.jar;C:\Users\melin\.m2\repository\net\bytebuddy\byte-buddy-agent\1.14.9\byte-buddy-agent-1.14.9.jar;C:\Users\melin\.m2\repository\org\objenesis\objenesis\3.3\objenesis-3.3.jar;C:\Users\melin\.m2\repository\org\mockito\mockito-junit-jupiter\5.7.0\mockito-junit-jupiter-5.7.0.jar;"/>
+    <property name="java.vm.vendor" value="Oracle Corporation"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="user.variant" value=""/>
+    <property name="java.vendor.url" value="https://java.oracle.com/"/>
+    <property name="user.timezone" value="Europe/Paris"/>
+    <property name="os.name" value="Windows 11"/>
+    <property name="java.vm.specification.version" value="21"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="user.country" value="FR"/>
+    <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk-21\bin"/>
+    <property name="sun.java.command" value="C:\Users\melin\AppData\Local\Temp\surefire16417876456132785532\surefirebooter-20250426093810155_3.jar C:\Users\melin\AppData\Local\Temp\surefire16417876456132785532 2025-04-26T09-38-09_903-jvmRun1 surefire-20250426093810155_1tmp surefire_0-20250426093810155_2tmp"/>
+    <property name="jdk.debug" value="release"/>
+    <property name="surefire.test.class.path" value="D:\Document\Etude sup\4A\JAVA\projet_pvz_fonctionnel\projet_pvz\target\test-classes;D:\Document\Etude sup\4A\JAVA\projet_pvz_fonctionnel\projet_pvz\target\classes;C:\Users\melin\.m2\repository\org\springframework\spring-webmvc\6.2.2\spring-webmvc-6.2.2.jar;C:\Users\melin\.m2\repository\org\springframework\spring-aop\6.2.2\spring-aop-6.2.2.jar;C:\Users\melin\.m2\repository\org\springframework\spring-beans\6.2.2\spring-beans-6.2.2.jar;C:\Users\melin\.m2\repository\org\springframework\spring-context\6.2.2\spring-context-6.2.2.jar;C:\Users\melin\.m2\repository\io\micrometer\micrometer-observation\1.14.3\micrometer-observation-1.14.3.jar;C:\Users\melin\.m2\repository\io\micrometer\micrometer-commons\1.14.3\micrometer-commons-1.14.3.jar;C:\Users\melin\.m2\repository\org\springframework\spring-core\6.2.2\spring-core-6.2.2.jar;C:\Users\melin\.m2\repository\org\springframework\spring-jcl\6.2.2\spring-jcl-6.2.2.jar;C:\Users\melin\.m2\repository\org\springframework\spring-expression\6.2.2\spring-expression-6.2.2.jar;C:\Users\melin\.m2\repository\org\springframework\spring-web\6.2.2\spring-web-6.2.2.jar;C:\Users\melin\.m2\repository\org\springframework\spring-jdbc\6.1.13\spring-jdbc-6.1.13.jar;C:\Users\melin\.m2\repository\org\springframework\spring-tx\6.1.13\spring-tx-6.1.13.jar;C:\Users\melin\.m2\repository\com\mysql\mysql-connector-j\8.0.33\mysql-connector-j-8.0.33.jar;C:\Users\melin\.m2\repository\com\google\protobuf\protobuf-java\3.21.9\protobuf-java-3.21.9.jar;C:\Users\melin\.m2\repository\com\fasterxml\jackson\core\jackson-databind\2.18.2\jackson-databind-2.18.2.jar;C:\Users\melin\.m2\repository\com\fasterxml\jackson\core\jackson-annotations\2.18.2\jackson-annotations-2.18.2.jar;C:\Users\melin\.m2\repository\com\fasterxml\jackson\core\jackson-core\2.18.2\jackson-core-2.18.2.jar;C:\Users\melin\.m2\repository\jakarta\servlet\jakarta.servlet-api\6.1.0\jakarta.servlet-api-6.1.0.jar;C:\Users\melin\.m2\repository\ch\qos\logback\logback-classic\1.5.16\logback-classic-1.5.16.jar;C:\Users\melin\.m2\repository\ch\qos\logback\logback-core\1.5.16\logback-core-1.5.16.jar;C:\Users\melin\.m2\repository\org\slf4j\slf4j-api\2.0.16\slf4j-api-2.0.16.jar;C:\Users\melin\.m2\repository\org\junit\jupiter\junit-jupiter\5.10.1\junit-jupiter-5.10.1.jar;C:\Users\melin\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.10.1\junit-jupiter-api-5.10.1.jar;C:\Users\melin\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;C:\Users\melin\.m2\repository\org\junit\platform\junit-platform-commons\1.10.1\junit-platform-commons-1.10.1.jar;C:\Users\melin\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\melin\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.10.1\junit-jupiter-params-5.10.1.jar;C:\Users\melin\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.10.1\junit-jupiter-engine-5.10.1.jar;C:\Users\melin\.m2\repository\org\junit\platform\junit-platform-engine\1.10.1\junit-platform-engine-1.10.1.jar;C:\Users\melin\.m2\repository\org\mockito\mockito-core\5.7.0\mockito-core-5.7.0.jar;C:\Users\melin\.m2\repository\net\bytebuddy\byte-buddy\1.14.9\byte-buddy-1.14.9.jar;C:\Users\melin\.m2\repository\net\bytebuddy\byte-buddy-agent\1.14.9\byte-buddy-agent-1.14.9.jar;C:\Users\melin\.m2\repository\org\objenesis\objenesis\3.3\objenesis-3.3.jar;C:\Users\melin\.m2\repository\org\mockito\mockito-junit-jupiter\5.7.0\mockito-junit-jupiter-5.7.0.jar;"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="user.home" value="C:\Users\melin"/>
+    <property name="user.language" value="fr"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.version.date" value="2024-04-16"/>
+    <property name="java.home" value="C:\Program Files\Java\jdk-21"/>
+    <property name="file.separator" value="\"/>
+    <property name="basedir" value="D:\Document\Etude sup\4A\JAVA\projet_pvz_fonctionnel\projet_pvz"/>
+    <property name="java.vm.compressedOopsMode" value="32-bit"/>
+    <property name="line.separator" value="&#10;"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="surefire.real.class.path" value="C:\Users\melin\AppData\Local\Temp\surefire16417876456132785532\surefirebooter-20250426093810155_3.jar"/>
+    <property name="user.script" value=""/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="java.runtime.version" value="21.0.3+7-LTS-152"/>
+    <property name="user.name" value="melin"/>
+    <property name="stdout.encoding" value="Cp1252"/>
+    <property name="path.separator" value=";"/>
+    <property name="os.version" value="10.0"/>
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
+    <property name="file.encoding" value="UTF-8"/>
+    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/>
+    <property name="localRepository" value="C:\Users\melin\.m2\repository"/>
+    <property name="java.vendor.url.bug" value="https://bugreport.java.com/bugreport/"/>
+    <property name="java.io.tmpdir" value="C:\Users\melin\AppData\Local\Temp\"/>
+    <property name="java.version" value="21.0.3"/>
+    <property name="user.dir" value="D:\Document\Etude sup\4A\JAVA\projet_pvz_fonctionnel\projet_pvz"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="sun.os.patch.level" value=""/>
+    <property name="native.encoding" value="Cp1252"/>
+    <property name="java.library.path" value="C:\Program Files\Java\jdk-21\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\Program Files\Python313\Scripts\;C:\Program Files\Python313\;C:\Program Files\Common Files\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\ProgramData\ComposerSetup\bin;C:\Program Files\apache-tomcat-10.1.36\apache-tomcat-10.1.36\bin;D:\bin;C:\Users\melin\AppData\Local\nvm;C:\nvm4w\nodejs;C:\Program Files\nodejs\node.exe;C:\Program Files\nodejs\;D:\Applications min\symfony-cli_windows_amd64;C:\Program Files\MAMP\bin\php\php8.3.1;C:\Program Files\Docker\Docker\resources\bin;C:\Program Files\dotnet\;C:\Python;C:\Program Files\apache-maven-3.9.9\bin;C:\Users\melin\AppData\Local\Programs\Python\Launcher\;C:\Users\melin\AppData\Local\Microsoft\WindowsApps;C:\Users\melin\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\melin\OneDrive\Documents\IntelliJ IDEA 2024.3.2.1\bin;;C:\Program Files\Java\jdk-21\bin;C:\Program Files\MySQL\MySQL Server 8.0\bin;C:\Program Files\apache-maven-3.9.9\bin;C:\Users\melin\AppData\Roaming\Composer\vendor\bin;C:\Users\melin\go\bin;C:\Users\melin\AppData\Local\nvm;C:\nvm4w\nodejs;C:\Users\melin\AppData\Roaming\npm;C:\Program Files\nodejs\node.exe;C:\nvm4w\nodejs;C:\ProgramData\cursor\resources\app\bin;."/>
+    <property name="java.vm.info" value="mixed mode, sharing"/>
+    <property name="stderr.encoding" value="Cp1252"/>
+    <property name="java.vendor" value="Oracle Corporation"/>
+    <property name="java.vm.version" value="21.0.3+7-LTS-152"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="java.class.version" value="65.0"/>
+  </properties>
+  <testcase name="updateMap_withNullLigne_shouldSucceed" classname="com.oxyl.coursepfback.service.MapServiceTest" time="2.6">
+    <system-out><![CDATA[09:38:14.003 [main] DEBUG com.oxyl.coursepfback.service.MapService -- Mise à jour de la map: com.oxyl.coursepfback.model.MapModel@4bee18dc
+09:38:14.012 [main] INFO com.oxyl.coursepfback.service.MapService -- Map mise à jour avec succès: com.oxyl.coursepfback.model.MapModel@6d4a65c6
+]]></system-out>
+    <system-err><![CDATA[WARNING: A Java agent has been loaded dynamically (C:\Users\melin\.m2\repository\net\bytebuddy\byte-buddy-agent\1.14.9\byte-buddy-agent-1.14.9.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+]]></system-err>
+  </testcase>
+  <testcase name="updateMap_shouldSucceed" classname="com.oxyl.coursepfback.service.MapServiceTest" time="0.016">
+    <system-out><![CDATA[09:38:14.093 [main] DEBUG com.oxyl.coursepfback.service.MapService -- Mise à jour de la map: com.oxyl.coursepfback.model.MapModel@4e628b52
+09:38:14.103 [main] INFO com.oxyl.coursepfback.service.MapService -- Map mise à jour avec succès: com.oxyl.coursepfback.model.MapModel@4e628b52
+]]></system-out>
+  </testcase>
+  <testcase name="getMap_withNonExistentId_shouldThrowNotFoundException" classname="com.oxyl.coursepfback.service.MapServiceTest" time="0.019">
+    <system-out><![CDATA[09:38:14.122 [main] DEBUG com.oxyl.coursepfback.service.MapService -- Récupération de la map avec l'id: 1
+09:38:14.123 [main] ERROR com.oxyl.coursepfback.service.MapService -- Map non trouvée avec l'id: 1
+]]></system-out>
+  </testcase>
+  <testcase name="updateMap_withInvalidDimensions_shouldThrowValidationException" classname="com.oxyl.coursepfback.service.MapServiceTest" time="0.011">
+    <system-out><![CDATA[09:38:14.138 [main] DEBUG com.oxyl.coursepfback.service.MapService -- Mise à jour de la map: com.oxyl.coursepfback.model.MapModel@bdc8014
+09:38:14.139 [main] ERROR com.oxyl.coursepfback.service.MapService -- Tentative de mise à jour du nombre de lignes avec une valeur négative: 0
+09:38:14.140 [main] DEBUG com.oxyl.coursepfback.service.MapService -- Mise à jour de la map: com.oxyl.coursepfback.model.MapModel@bdc8014
+09:38:14.140 [main] ERROR com.oxyl.coursepfback.service.MapService -- Tentative de mise à jour du nombre de colonnes avec une valeur négative: 0
+]]></system-out>
+  </testcase>
+  <testcase name="updateMap_withInvalidLigne_shouldThrowValidationException" classname="com.oxyl.coursepfback.service.MapServiceTest" time="0.019">
+    <system-out><![CDATA[09:38:14.156 [main] DEBUG com.oxyl.coursepfback.service.MapService -- Mise à jour de la map: com.oxyl.coursepfback.model.MapModel@7435a578
+09:38:14.159 [main] ERROR com.oxyl.coursepfback.service.MapService -- Tentative de mise à jour du nombre de lignes avec une valeur négative: -1
+]]></system-out>
+  </testcase>
+  <testcase name="deleteMap_withZombies_shouldDeleteZombies" classname="com.oxyl.coursepfback.service.MapServiceTest" time="0.017">
+    <system-out><![CDATA[09:38:14.176 [main] DEBUG com.oxyl.coursepfback.service.MapService -- Suppression de la map avec l'id: 1
+09:38:14.176 [main] INFO com.oxyl.coursepfback.service.MapService -- Map supprimée avec succès: com.oxyl.coursepfback.model.MapModel@2b214b94
+]]></system-out>
+  </testcase>
+  <testcase name="createMap_withInvalidDimensions_shouldThrowValidationException" classname="com.oxyl.coursepfback.service.MapServiceTest" time="0.016">
+    <system-out><![CDATA[09:38:14.192 [main] DEBUG com.oxyl.coursepfback.service.MapService -- Création d'une nouvelle map: com.oxyl.coursepfback.model.MapModel@6daf2337
+09:38:14.192 [main] ERROR com.oxyl.coursepfback.service.MapService -- Tentative de création d'une map avec un nombre de lignes négatif: 0
+09:38:14.192 [main] DEBUG com.oxyl.coursepfback.service.MapService -- Création d'une nouvelle map: com.oxyl.coursepfback.model.MapModel@6daf2337
+09:38:14.192 [main] ERROR com.oxyl.coursepfback.service.MapService -- Tentative de création d'une map avec un nombre de colonnes négatif: 0
+]]></system-out>
+  </testcase>
+  <testcase name="updateMap_withAllNullValues_shouldSucceed" classname="com.oxyl.coursepfback.service.MapServiceTest" time="0.024">
+    <system-out><![CDATA[09:38:14.208 [main] DEBUG com.oxyl.coursepfback.service.MapService -- Mise à jour de la map: com.oxyl.coursepfback.model.MapModel@78de58ea
+09:38:14.210 [main] INFO com.oxyl.coursepfback.service.MapService -- Map mise à jour avec succès: com.oxyl.coursepfback.model.MapModel@60e5272
+]]></system-out>
+  </testcase>
+  <testcase name="deleteMap_shouldSucceed" classname="com.oxyl.coursepfback.service.MapServiceTest" time="0.006">
+    <system-out><![CDATA[09:38:14.224 [main] DEBUG com.oxyl.coursepfback.service.MapService -- Suppression de la map avec l'id: 1
+09:38:14.224 [main] INFO com.oxyl.coursepfback.service.MapService -- Map supprimée avec succès: com.oxyl.coursepfback.model.MapModel@706cb08
+]]></system-out>
+  </testcase>
+  <testcase name="getMap_shouldReturnMap" classname="com.oxyl.coursepfback.service.MapServiceTest" time="0.014">
+    <system-out><![CDATA[09:38:14.238 [main] DEBUG com.oxyl.coursepfback.service.MapService -- Récupération de la map avec l'id: 1
+09:38:14.238 [main] DEBUG com.oxyl.coursepfback.service.MapService -- Map trouvée: com.oxyl.coursepfback.model.MapModel@1dcca8d3
+]]></system-out>
+  </testcase>
+  <testcase name="updateMap_withNonExistentId_shouldThrowNotFoundException" classname="com.oxyl.coursepfback.service.MapServiceTest" time="0.017">
+    <system-out><![CDATA[09:38:14.238 [main] DEBUG com.oxyl.coursepfback.service.MapService -- Mise à jour de la map: com.oxyl.coursepfback.model.MapModel@3b6c624
+09:38:14.238 [main] ERROR com.oxyl.coursepfback.service.MapService -- Tentative de mise à jour d'une map inexistante avec l'id: 1
+]]></system-out>
+  </testcase>
+  <testcase name="deleteMap_withMultipleZombies_shouldDeleteAllZombies" classname="com.oxyl.coursepfback.service.MapServiceTest" time="0.015">
+    <system-out><![CDATA[09:38:14.256 [main] DEBUG com.oxyl.coursepfback.service.MapService -- Suppression de la map avec l'id: 1
+09:38:14.256 [main] INFO com.oxyl.coursepfback.service.MapService -- Map supprimée avec succès: com.oxyl.coursepfback.model.MapModel@31ee96f4
+]]></system-out>
+  </testcase>
+  <testcase name="updateMap_withInvalidCheminImage_shouldThrowValidationException" classname="com.oxyl.coursepfback.service.MapServiceTest" time="0.0">
+    <system-out><![CDATA[09:38:14.271 [main] DEBUG com.oxyl.coursepfback.service.MapService -- Mise à jour de la map: com.oxyl.coursepfback.model.MapModel@47d7bfb3
+09:38:14.271 [main] ERROR com.oxyl.coursepfback.service.MapService -- Tentative de mise à jour du chemin d'image avec une valeur vide
+]]></system-out>
+  </testcase>
+  <testcase name="updateMap_withNullMap_shouldThrowValidationException" classname="com.oxyl.coursepfback.service.MapServiceTest" time="0.021">
+    <system-out><![CDATA[09:38:14.292 [main] DEBUG com.oxyl.coursepfback.service.MapService -- Mise à jour de la map: null
+09:38:14.292 [main] ERROR com.oxyl.coursepfback.service.MapService -- Tentative de mise à jour d'une map null
+]]></system-out>
+  </testcase>
+  <testcase name="updateMap_withNullColonne_shouldSucceed" classname="com.oxyl.coursepfback.service.MapServiceTest" time="0.013">
+    <system-out><![CDATA[09:38:14.305 [main] DEBUG com.oxyl.coursepfback.service.MapService -- Mise à jour de la map: com.oxyl.coursepfback.model.MapModel@29852487
+09:38:14.305 [main] INFO com.oxyl.coursepfback.service.MapService -- Map mise à jour avec succès: com.oxyl.coursepfback.model.MapModel@771db12c
+]]></system-out>
+  </testcase>
+  <testcase name="createMap_withNullCheminImage_shouldThrowValidationException" classname="com.oxyl.coursepfback.service.MapServiceTest" time="0.0">
+    <system-out><![CDATA[09:38:14.305 [main] DEBUG com.oxyl.coursepfback.service.MapService -- Création d'une nouvelle map: com.oxyl.coursepfback.model.MapModel@51827393
+09:38:14.305 [main] ERROR com.oxyl.coursepfback.service.MapService -- Tentative de création d'une map avec un chemin d'image vide
+]]></system-out>
+  </testcase>
+  <testcase name="updateMap_withEmptyCheminImage_shouldThrowValidationException" classname="com.oxyl.coursepfback.service.MapServiceTest" time="0.021">
+    <system-out><![CDATA[09:38:14.323 [main] DEBUG com.oxyl.coursepfback.service.MapService -- Mise à jour de la map: com.oxyl.coursepfback.model.MapModel@58399d82
+09:38:14.324 [main] ERROR com.oxyl.coursepfback.service.MapService -- Tentative de mise à jour du chemin d'image avec une valeur vide
+]]></system-out>
+  </testcase>
+  <testcase name="createMap_withEmptyCheminImage_shouldThrowValidationException" classname="com.oxyl.coursepfback.service.MapServiceTest" time="0.0">
+    <system-out><![CDATA[09:38:14.326 [main] DEBUG com.oxyl.coursepfback.service.MapService -- Création d'une nouvelle map: com.oxyl.coursepfback.model.MapModel@7ac9af2a
+09:38:14.326 [main] ERROR com.oxyl.coursepfback.service.MapService -- Tentative de création d'une map avec un chemin d'image vide
+]]></system-out>
+  </testcase>
+  <testcase name="deleteMap_withNonExistentId_shouldThrowNotFoundException" classname="com.oxyl.coursepfback.service.MapServiceTest" time="0.009">
+    <system-out><![CDATA[09:38:14.344 [main] DEBUG com.oxyl.coursepfback.service.MapService -- Suppression de la map avec l'id: 1
+09:38:14.345 [main] ERROR com.oxyl.coursepfback.service.MapService -- Tentative de suppression d'une map inexistante avec l'id: 1
+]]></system-out>
+  </testcase>
+  <testcase name="getMap_withNullId_shouldThrowValidationException" classname="com.oxyl.coursepfback.service.MapServiceTest" time="0.013">
+    <system-out><![CDATA[09:38:14.358 [main] DEBUG com.oxyl.coursepfback.service.MapService -- Récupération de la map avec l'id: null
+09:38:14.359 [main] ERROR com.oxyl.coursepfback.service.MapService -- Tentative de récupération d'une map avec un id null
+]]></system-out>
+  </testcase>
+  <testcase name="getAllMaps_withEmptyList_shouldReturnEmptyList" classname="com.oxyl.coursepfback.service.MapServiceTest" time="0.008">
+    <system-out><![CDATA[09:38:14.368 [main] DEBUG com.oxyl.coursepfback.service.MapService -- Récupération de toutes les maps
+09:38:14.369 [main] DEBUG com.oxyl.coursepfback.service.MapService -- 0 maps trouvées
+]]></system-out>
+  </testcase>
+  <testcase name="updateMap_withInvalidColonne_shouldThrowValidationException" classname="com.oxyl.coursepfback.service.MapServiceTest" time="0.0">
+    <system-out><![CDATA[09:38:14.371 [main] DEBUG com.oxyl.coursepfback.service.MapService -- Mise à jour de la map: com.oxyl.coursepfback.model.MapModel@6b474074
+09:38:14.371 [main] ERROR com.oxyl.coursepfback.service.MapService -- Tentative de mise à jour du nombre de colonnes avec une valeur négative: -1
+]]></system-out>
+  </testcase>
+  <testcase name="createMap_withNullMap_shouldThrowValidationException" classname="com.oxyl.coursepfback.service.MapServiceTest" time="0.017">
+    <system-out><![CDATA[09:38:14.371 [main] DEBUG com.oxyl.coursepfback.service.MapService -- Création d'une nouvelle map: null
+09:38:14.371 [main] ERROR com.oxyl.coursepfback.service.MapService -- Tentative de création d'une map null
+]]></system-out>
+  </testcase>
+  <testcase name="deleteMap_withNullId_shouldThrowValidationException" classname="com.oxyl.coursepfback.service.MapServiceTest" time="0.007">
+    <system-out><![CDATA[09:38:14.395 [main] DEBUG com.oxyl.coursepfback.service.MapService -- Suppression de la map avec l'id: null
+09:38:14.395 [main] ERROR com.oxyl.coursepfback.service.MapService -- Tentative de suppression d'une map avec un id null
+]]></system-out>
+  </testcase>
+  <testcase name="createMap_withInvalidColonne_shouldThrowValidationException" classname="com.oxyl.coursepfback.service.MapServiceTest" time="0.002">
+    <system-out><![CDATA[09:38:14.399 [main] DEBUG com.oxyl.coursepfback.service.MapService -- Création d'une nouvelle map: com.oxyl.coursepfback.model.MapModel@2e140e59
+09:38:14.399 [main] ERROR com.oxyl.coursepfback.service.MapService -- Tentative de création d'une map avec un nombre de colonnes négatif: -1
+]]></system-out>
+  </testcase>
+  <testcase name="createMap_withInvalidLigne_shouldThrowValidationException" classname="com.oxyl.coursepfback.service.MapServiceTest" time="0.005">
+    <system-out><![CDATA[09:38:14.408 [main] DEBUG com.oxyl.coursepfback.service.MapService -- Création d'une nouvelle map: com.oxyl.coursepfback.model.MapModel@26e412ef
+09:38:14.408 [main] ERROR com.oxyl.coursepfback.service.MapService -- Tentative de création d'une map avec un nombre de lignes négatif: -1
+]]></system-out>
+  </testcase>
+  <testcase name="getAllMaps_shouldReturnList" classname="com.oxyl.coursepfback.service.MapServiceTest" time="0.0">
+    <system-out><![CDATA[09:38:14.408 [main] DEBUG com.oxyl.coursepfback.service.MapService -- Récupération de toutes les maps
+09:38:14.408 [main] DEBUG com.oxyl.coursepfback.service.MapService -- 1 maps trouvées
+]]></system-out>
+  </testcase>
+  <testcase name="updateMap_withNullCheminImage_shouldSucceed" classname="com.oxyl.coursepfback.service.MapServiceTest" time="0.014">
+    <system-out><![CDATA[09:38:14.422 [main] DEBUG com.oxyl.coursepfback.service.MapService -- Mise à jour de la map: com.oxyl.coursepfback.model.MapModel@55f8669d
+09:38:14.422 [main] INFO com.oxyl.coursepfback.service.MapService -- Map mise à jour avec succès: com.oxyl.coursepfback.model.MapModel@6be25526
+]]></system-out>
+  </testcase>
+  <testcase name="createMap_shouldSucceed" classname="com.oxyl.coursepfback.service.MapServiceTest" time="0.0">
+    <system-out><![CDATA[09:38:14.422 [main] DEBUG com.oxyl.coursepfback.service.MapService -- Création d'une nouvelle map: com.oxyl.coursepfback.model.MapModel@511505e7
+09:38:14.422 [main] INFO com.oxyl.coursepfback.service.MapService -- Map créée avec succès: com.oxyl.coursepfback.model.MapModel@511505e7
+]]></system-out>
+  </testcase>
+</testsuite>

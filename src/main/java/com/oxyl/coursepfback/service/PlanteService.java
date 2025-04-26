@@ -61,6 +61,14 @@ public class PlanteService implements PlanteServiceInterface {
             logger.error("Tentative de création d'une plante avec un soleil par seconde négatif: {}", planteModel.getSoleil_par_seconde());
             throw new ValidationException("Le soleil par seconde doit être positif");
         }
+        if (planteModel.getEffet() == null || planteModel.getEffet().trim().isEmpty()) {
+            logger.error("Tentative de création d'une plante avec un effet vide");
+            throw new ValidationException("L'effet ne peut pas être vide");
+        }
+        if (planteModel.getChemin_image() == null || planteModel.getChemin_image().trim().isEmpty()) {
+            logger.error("Tentative de création d'une plante avec un chemin d'image vide");
+            throw new ValidationException("Le chemin de l'image ne peut pas être vide");
+        }
         
         planteRepository.createPlante(planteModel);
         logger.info("Plante créée avec succès: {}", planteModel);
@@ -109,66 +117,83 @@ public class PlanteService implements PlanteServiceInterface {
      */
     @Override
     public void updatePlante(PlanteModel planteModel) {
-        logger.debug("Mise à jour de la plante: {}", planteModel);
         if (planteModel == null) {
             logger.error("Tentative de mise à jour d'une plante null");
             throw new ValidationException("La plante ne peut pas être null");
         }
-        
-        // Vérifier d'abord si la plante existe
-        PlanteModel existingPlante = getPlante(planteModel.getId_plante());
+
+        PlanteModel existingPlante = planteRepository.getPlante(planteModel.getId_plante());
         if (existingPlante == null) {
-            logger.error("Tentative de mise à jour d'une plante inexistante avec l'id: {}", planteModel.getId_plante());
-            throw new NotFoundException("La plante avec l'id " + planteModel.getId_plante() + " n'existe pas");
+            logger.error("Tentative de mise à jour d'une plante inexistante");
+            throw new NotFoundException("Plante non trouvée");
         }
-        
-        if (planteModel.getNom() != null && !planteModel.getNom().trim().isEmpty()) {
+
+        if (planteModel.getNom() != null) {
+            if (planteModel.getNom().trim().isEmpty()) {
+                logger.error("Tentative de mise à jour d'une plante avec un nom vide");
+                throw new ValidationException("Le nom de la plante ne peut pas être vide");
+            }
             existingPlante.setNom(planteModel.getNom());
         }
+
         if (planteModel.getPoint_de_vie() != null) {
             if (planteModel.getPoint_de_vie() <= 0) {
-                logger.error("Tentative de mise à jour des points de vie avec une valeur négative: {}", planteModel.getPoint_de_vie());
+                logger.error("Tentative de mise à jour d'une plante avec des points de vie invalides");
                 throw new ValidationException("Les points de vie doivent être positifs");
             }
             existingPlante.setPoint_de_vie(planteModel.getPoint_de_vie());
         }
+
         if (planteModel.getAttaque_par_seconde() != null) {
             if (planteModel.getAttaque_par_seconde() <= 0) {
-                logger.error("Tentative de mise à jour de l'attaque par seconde avec une valeur négative: {}", planteModel.getAttaque_par_seconde());
+                logger.error("Tentative de mise à jour d'une plante avec une attaque par seconde invalide");
                 throw new ValidationException("L'attaque par seconde doit être positive");
             }
             existingPlante.setAttaque_par_seconde(planteModel.getAttaque_par_seconde());
         }
+
         if (planteModel.getDegat_attaque() != null) {
             if (planteModel.getDegat_attaque() <= 0) {
-                logger.error("Tentative de mise à jour des dégâts d'attaque avec une valeur négative: {}", planteModel.getDegat_attaque());
+                logger.error("Tentative de mise à jour d'une plante avec des dégâts d'attaque invalides");
                 throw new ValidationException("Les dégâts d'attaque doivent être positifs");
             }
             existingPlante.setDegat_attaque(planteModel.getDegat_attaque());
         }
+
         if (planteModel.getCout() != null) {
             if (planteModel.getCout() <= 0) {
-                logger.error("Tentative de mise à jour du coût avec une valeur négative: {}", planteModel.getCout());
+                logger.error("Tentative de mise à jour d'une plante avec un coût invalide");
                 throw new ValidationException("Le coût doit être positif");
             }
             existingPlante.setCout(planteModel.getCout());
         }
+
         if (planteModel.getSoleil_par_seconde() != null) {
-            if (planteModel.getSoleil_par_seconde() <= 0) {
-                logger.error("Tentative de mise à jour du soleil par seconde avec une valeur négative: {}", planteModel.getSoleil_par_seconde());
-                throw new ValidationException("Le soleil par seconde doit être positif");
+            if (planteModel.getSoleil_par_seconde() < 0) {
+                logger.error("Tentative de mise à jour d'une plante avec un soleil par seconde invalide");
+                throw new ValidationException("Le soleil par seconde ne peut pas être négatif");
             }
             existingPlante.setSoleil_par_seconde(planteModel.getSoleil_par_seconde());
         }
+
         if (planteModel.getEffet() != null) {
+            if (planteModel.getEffet().trim().isEmpty()) {
+                logger.error("Tentative de mise à jour d'une plante avec un effet vide");
+                throw new ValidationException("L'effet ne peut pas être vide");
+            }
             existingPlante.setEffet(planteModel.getEffet());
         }
+
         if (planteModel.getChemin_image() != null) {
+            if (planteModel.getChemin_image().trim().isEmpty()) {
+                logger.error("Tentative de mise à jour d'une plante avec un chemin d'image vide");
+                throw new ValidationException("Le chemin de l'image ne peut pas être vide");
+            }
             existingPlante.setChemin_image(planteModel.getChemin_image());
         }
-        
+
         planteRepository.updatePlante(existingPlante);
-        logger.info("Plante mise à jour avec succès: {}", existingPlante);
+        logger.info("Plante mise à jour avec succès");
     }
 
     /**

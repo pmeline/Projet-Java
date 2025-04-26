@@ -103,13 +103,13 @@ public class MapService implements MapServiceInterface {
             throw new ValidationException("La map ne peut pas être null");
         }
         
-        // Vérifier d'abord si la map existe
-        MapModel existingMap = getMap(mapModel.getId_map());
+        MapModel existingMap = mapRepository.getMap(mapModel.getId_map());
         if (existingMap == null) {
             logger.error("Tentative de mise à jour d'une map inexistante avec l'id: {}", mapModel.getId_map());
             throw new NotFoundException("La map avec l'id " + mapModel.getId_map() + " n'existe pas");
         }
         
+        // Mise à jour partielle
         if (mapModel.getLigne() != null) {
             if (mapModel.getLigne() <= 0) {
                 logger.error("Tentative de mise à jour du nombre de lignes avec une valeur négative: {}", mapModel.getLigne());
@@ -124,7 +124,11 @@ public class MapService implements MapServiceInterface {
             }
             existingMap.setColonne(mapModel.getColonne());
         }
-        if (mapModel.getChemin_image() != null && !mapModel.getChemin_image().trim().isEmpty()) {
+        if (mapModel.getChemin_image() != null) {
+            if (mapModel.getChemin_image().trim().isEmpty()) {
+                logger.error("Tentative de mise à jour du chemin d'image avec une valeur vide");
+                throw new ValidationException("Le chemin de l'image ne peut pas être vide");
+            }
             existingMap.setChemin_image(mapModel.getChemin_image());
         }
         

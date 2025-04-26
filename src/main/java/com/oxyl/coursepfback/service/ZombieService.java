@@ -2,6 +2,7 @@ package com.oxyl.coursepfback.service;
 
 import com.oxyl.coursepfback.exception.NotFoundException;
 import com.oxyl.coursepfback.exception.ValidationException;
+import com.oxyl.coursepfback.model.MapModel;
 import com.oxyl.coursepfback.model.ZombieModel;
 import com.oxyl.coursepfback.persistance.repository.ZombieRepository;
 import org.slf4j.Logger;
@@ -63,6 +64,10 @@ public class ZombieService implements ZombieServiceInterface {
         if (zombieModel.getId_map() == null) {
             logger.error("Tentative de création d'un zombie sans id de map");
             throw new ValidationException("L'id de la map ne peut pas être null");
+        }
+        if (zombieModel.getChemin_image() == null || zombieModel.getChemin_image().trim().isEmpty()) {
+            logger.error("Tentative de création d'un zombie avec un chemin d'image vide");
+            throw new ValidationException("Le chemin de l'image ne peut pas être vide");
         }
         
         try {
@@ -143,60 +148,105 @@ public class ZombieService implements ZombieServiceInterface {
      */
     @Override
     public void updateZombie(ZombieModel zombieModel) {
-        logger.debug("Mise à jour du zombie: {}", zombieModel);
         if (zombieModel == null) {
             logger.error("Tentative de mise à jour d'un zombie null");
             throw new ValidationException("Le zombie ne peut pas être null");
         }
-        
-        // Vérifier d'abord si le zombie existe
-        ZombieModel existingZombie = getZombie(zombieModel.getId_zombie());
+
+        ZombieModel existingZombie = zombieRepository.getZombie(zombieModel.getId_zombie());
         if (existingZombie == null) {
             logger.error("Tentative de mise à jour d'un zombie inexistant avec l'id: {}", zombieModel.getId_zombie());
             throw new NotFoundException("Le zombie avec l'id " + zombieModel.getId_zombie() + " n'existe pas");
         }
-        
-        if (zombieModel.getNom() != null && !zombieModel.getNom().trim().isEmpty()) {
-            existingZombie.setNom(zombieModel.getNom());
+
+        if (zombieModel.getNom() != null) {
+            String nom = zombieModel.getNom().trim();
+            if (nom.isEmpty()) {
+                logger.error("Tentative de mise à jour d'un zombie avec un nom vide");
+                throw new ValidationException("Le nom du zombie ne peut pas être vide");
+            }
+            if (nom.length() > 50) {
+                logger.error("Tentative de mise à jour d'un zombie avec un nom trop long");
+                throw new ValidationException("Le nom du zombie ne peut pas dépasser 50 caractères");
+            }
+            existingZombie.setNom(nom);
         }
+
         if (zombieModel.getPoint_de_vie() != null) {
             if (zombieModel.getPoint_de_vie() <= 0) {
-                logger.error("Tentative de mise à jour des points de vie avec une valeur négative: {}", zombieModel.getPoint_de_vie());
-                throw new ValidationException("Les points de vie doivent être positifs");
+                logger.error("Tentative de mise à jour d'un zombie avec des points de vie invalides: {}", zombieModel.getPoint_de_vie());
+                throw new ValidationException("Les points de vie doivent être strictement positifs");
+            }
+            if (zombieModel.getPoint_de_vie() > 1000) {
+                logger.error("Tentative de mise à jour d'un zombie avec des points de vie trop élevés: {}", zombieModel.getPoint_de_vie());
+                throw new ValidationException("Les points de vie ne peuvent pas dépasser 1000");
             }
             existingZombie.setPoint_de_vie(zombieModel.getPoint_de_vie());
         }
+
         if (zombieModel.getAttaque_par_seconde() != null) {
             if (zombieModel.getAttaque_par_seconde() <= 0) {
-                logger.error("Tentative de mise à jour de l'attaque par seconde avec une valeur négative: {}", zombieModel.getAttaque_par_seconde());
-                throw new ValidationException("L'attaque par seconde doit être positive");
+                logger.error("Tentative de mise à jour d'un zombie avec une attaque par seconde invalide: {}", zombieModel.getAttaque_par_seconde());
+                throw new ValidationException("L'attaque par seconde doit être strictement positive");
+            }
+            if (zombieModel.getAttaque_par_seconde() > 10) {
+                logger.error("Tentative de mise à jour d'un zombie avec une attaque par seconde trop élevée: {}", zombieModel.getAttaque_par_seconde());
+                throw new ValidationException("L'attaque par seconde ne peut pas dépasser 10");
             }
             existingZombie.setAttaque_par_seconde(zombieModel.getAttaque_par_seconde());
         }
+
         if (zombieModel.getDegat_attaque() != null) {
             if (zombieModel.getDegat_attaque() <= 0) {
-                logger.error("Tentative de mise à jour des dégâts d'attaque avec une valeur négative: {}", zombieModel.getDegat_attaque());
-                throw new ValidationException("Les dégâts d'attaque doivent être positifs");
+                logger.error("Tentative de mise à jour d'un zombie avec des dégâts d'attaque invalides: {}", zombieModel.getDegat_attaque());
+                throw new ValidationException("Les dégâts d'attaque doivent être strictement positifs");
+            }
+            if (zombieModel.getDegat_attaque() > 100) {
+                logger.error("Tentative de mise à jour d'un zombie avec des dégâts d'attaque trop élevés: {}", zombieModel.getDegat_attaque());
+                throw new ValidationException("Les dégâts d'attaque ne peuvent pas dépasser 100");
             }
             existingZombie.setDegat_attaque(zombieModel.getDegat_attaque());
         }
+
         if (zombieModel.getVitesse_de_deplacement() != null) {
             if (zombieModel.getVitesse_de_deplacement() <= 0) {
-                logger.error("Tentative de mise à jour de la vitesse de déplacement avec une valeur négative: {}", zombieModel.getVitesse_de_deplacement());
-                throw new ValidationException("La vitesse de déplacement doit être positive");
+                logger.error("Tentative de mise à jour d'un zombie avec une vitesse de déplacement invalide: {}", zombieModel.getVitesse_de_deplacement());
+                throw new ValidationException("La vitesse de déplacement doit être strictement positive");
+            }
+            if (zombieModel.getVitesse_de_deplacement() > 5) {
+                logger.error("Tentative de mise à jour d'un zombie avec une vitesse de déplacement trop élevée: {}", zombieModel.getVitesse_de_deplacement());
+                throw new ValidationException("La vitesse de déplacement ne peut pas dépasser 5");
             }
             existingZombie.setVitesse_de_deplacement(zombieModel.getVitesse_de_deplacement());
         }
+
+        if (zombieModel.getChemin_image() != null) {
+            String cheminImage = zombieModel.getChemin_image().trim();
+            if (cheminImage.isEmpty()) {
+                logger.error("Tentative de mise à jour d'un zombie avec un chemin d'image vide");
+                throw new ValidationException("Le chemin de l'image ne peut pas être vide");
+            }
+            if (!cheminImage.matches("^[a-zA-Z0-9_\\-\\.]+\\.(png|jpg|jpeg|gif)$")) {
+                logger.error("Tentative de mise à jour d'un zombie avec un chemin d'image invalide: {}", cheminImage);
+                throw new ValidationException("Le chemin de l'image doit être un nom de fichier valide avec l'extension .png, .jpg, .jpeg ou .gif");
+            }
+            existingZombie.setChemin_image(cheminImage);
+        }
+
         if (zombieModel.getId_map() != null) {
             try {
-                mapService.getMap(zombieModel.getId_map());
+                MapModel map = mapService.getMap(zombieModel.getId_map());
+                if (map == null) {
+                    logger.error("Tentative de mise à jour d'un zombie avec une map inexistante: {}", zombieModel.getId_map());
+                    throw new ValidationException("La map avec l'id " + zombieModel.getId_map() + " n'existe pas");
+                }
                 existingZombie.setId_map(zombieModel.getId_map());
             } catch (NotFoundException e) {
-                logger.error("Tentative de mise à jour du zombie avec une map inexistante: {}", zombieModel.getId_map());
+                logger.error("Tentative de mise à jour d'un zombie avec une map inexistante: {}", zombieModel.getId_map());
                 throw new ValidationException("La map avec l'id " + zombieModel.getId_map() + " n'existe pas");
             }
         }
-        
+
         zombieRepository.updateZombie(existingZombie);
         logger.info("Zombie mis à jour avec succès: {}", existingZombie);
     }
