@@ -6,6 +6,8 @@ import com.oxyl.coursepfback.persistance.entity.PlanteEntityMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.oxyl.coursepfback.persistance.entity.PlanteEntity;
 import org.springframework.stereotype.Repository;
+import com.oxyl.coursepfback.exception.NotFoundException;
+import org.springframework.dao.EmptyResultDataAccessException;
 
 import java.util.List;
 
@@ -43,7 +45,11 @@ public class PlanteRepository {
      * @return la plante correspondante
      */
     public PlanteModel getPlante(Long id_plante) {
-        return mapper.mapEntityToModel(planteDAO.getPlante(id_plante));
+        try {
+            return mapper.mapEntityToModel(planteDAO.getPlante(id_plante));
+        } catch (EmptyResultDataAccessException e) {
+            throw new NotFoundException("La plante avec l'id " + id_plante + " n'existe pas");
+        }
     }
 
     /**
@@ -60,6 +66,10 @@ public class PlanteRepository {
      * @param plante le modèle de la plante à mettre à jour
      */
     public void updatePlante(PlanteModel plante) {
+        PlanteEntity existingPlante = planteDAO.getPlante(plante.getId_plante());
+        if (existingPlante == null) {
+            throw new NotFoundException("La plante avec l'id " + plante.getId_plante() + " n'existe pas");
+        }
         PlanteEntity entity = mapper.mapModelToEntity(plante);
         planteDAO.updatePlante(entity);
     }

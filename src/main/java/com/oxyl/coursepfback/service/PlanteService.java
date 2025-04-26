@@ -124,38 +124,55 @@ public class PlanteService implements PlanteServiceInterface {
 
         PlanteModel existingPlante = planteRepository.getPlante(planteModel.getId_plante());
         if (existingPlante == null) {
-            logger.error("Tentative de mise à jour d'une plante inexistante");
-            throw new NotFoundException("Plante non trouvée");
+            logger.error("Tentative de mise à jour d'une plante inexistante avec l'id: {}", planteModel.getId_plante());
+            throw new NotFoundException("La plante avec l'id " + planteModel.getId_plante() + " n'existe pas");
         }
 
         if (planteModel.getNom() != null) {
-            if (planteModel.getNom().trim().isEmpty()) {
+            String nom = planteModel.getNom().trim();
+            if (nom.isEmpty()) {
                 logger.error("Tentative de mise à jour d'une plante avec un nom vide");
                 throw new ValidationException("Le nom de la plante ne peut pas être vide");
             }
-            existingPlante.setNom(planteModel.getNom());
+            if (nom.length() > 50) {
+                logger.error("Tentative de mise à jour d'une plante avec un nom trop long");
+                throw new ValidationException("Le nom de la plante ne peut pas dépasser 50 caractères");
+            }
+            existingPlante.setNom(nom);
         }
 
         if (planteModel.getPoint_de_vie() != null) {
             if (planteModel.getPoint_de_vie() <= 0) {
-                logger.error("Tentative de mise à jour d'une plante avec des points de vie invalides");
-                throw new ValidationException("Les points de vie doivent être positifs");
+                logger.error("Tentative de mise à jour d'une plante avec des points de vie invalides: {}", planteModel.getPoint_de_vie());
+                throw new ValidationException("Les points de vie doivent être strictement positifs");
+            }
+            if (planteModel.getPoint_de_vie() > 1000) {
+                logger.error("Tentative de mise à jour d'une plante avec des points de vie trop élevés: {}", planteModel.getPoint_de_vie());
+                throw new ValidationException("Les points de vie ne peuvent pas dépasser 1000");
             }
             existingPlante.setPoint_de_vie(planteModel.getPoint_de_vie());
         }
 
         if (planteModel.getAttaque_par_seconde() != null) {
             if (planteModel.getAttaque_par_seconde() <= 0) {
-                logger.error("Tentative de mise à jour d'une plante avec une attaque par seconde invalide");
-                throw new ValidationException("L'attaque par seconde doit être positive");
+                logger.error("Tentative de mise à jour d'une plante avec une attaque par seconde invalide: {}", planteModel.getAttaque_par_seconde());
+                throw new ValidationException("L'attaque par seconde doit être strictement positive");
+            }
+            if (planteModel.getAttaque_par_seconde() > 10) {
+                logger.error("Tentative de mise à jour d'une plante avec une attaque par seconde trop élevée: {}", planteModel.getAttaque_par_seconde());
+                throw new ValidationException("L'attaque par seconde ne peut pas dépasser 10");
             }
             existingPlante.setAttaque_par_seconde(planteModel.getAttaque_par_seconde());
         }
 
         if (planteModel.getDegat_attaque() != null) {
             if (planteModel.getDegat_attaque() <= 0) {
-                logger.error("Tentative de mise à jour d'une plante avec des dégâts d'attaque invalides");
-                throw new ValidationException("Les dégâts d'attaque doivent être positifs");
+                logger.error("Tentative de mise à jour d'une plante avec des dégâts d'attaque invalides: {}", planteModel.getDegat_attaque());
+                throw new ValidationException("Les dégâts d'attaque doivent être strictement positifs");
+            }
+            if (planteModel.getDegat_attaque() > 100) {
+                logger.error("Tentative de mise à jour d'une plante avec des dégâts d'attaque trop élevés: {}", planteModel.getDegat_attaque());
+                throw new ValidationException("Les dégâts d'attaque ne peuvent pas dépasser 100");
             }
             existingPlante.setDegat_attaque(planteModel.getDegat_attaque());
         }
@@ -185,15 +202,20 @@ public class PlanteService implements PlanteServiceInterface {
         }
 
         if (planteModel.getChemin_image() != null) {
-            if (planteModel.getChemin_image().trim().isEmpty()) {
+            String cheminImage = planteModel.getChemin_image().trim();
+            if (cheminImage.isEmpty()) {
                 logger.error("Tentative de mise à jour d'une plante avec un chemin d'image vide");
                 throw new ValidationException("Le chemin de l'image ne peut pas être vide");
             }
-            existingPlante.setChemin_image(planteModel.getChemin_image());
+            if (!cheminImage.matches("^[a-zA-Z0-9_\\-\\.]+\\.(png|jpg|jpeg|gif)$")) {
+                logger.error("Tentative de mise à jour d'une plante avec un chemin d'image invalide: {}", cheminImage);
+                throw new ValidationException("Le chemin de l'image doit être un nom de fichier valide avec l'extension .png, .jpg, .jpeg ou .gif");
+            }
+            existingPlante.setChemin_image(cheminImage);
         }
 
         planteRepository.updatePlante(existingPlante);
-        logger.info("Plante mise à jour avec succès");
+        logger.info("Plante mise à jour avec succès: {}", existingPlante);
     }
 
     /**

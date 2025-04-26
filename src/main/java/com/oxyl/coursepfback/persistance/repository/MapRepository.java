@@ -2,9 +2,12 @@ package com.oxyl.coursepfback.persistance.repository;
 
 import com.oxyl.coursepfback.model.MapModel;
 import com.oxyl.coursepfback.persistance.dao.MapDAO;
+import com.oxyl.coursepfback.persistance.entity.MapEntity;
 import com.oxyl.coursepfback.persistance.entity.MapEntityMapper;
+import com.oxyl.coursepfback.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.dao.EmptyResultDataAccessException;
 
 import java.util.List;
 
@@ -42,7 +45,11 @@ public class MapRepository {
      * @return la carte correspondante
      */
     public MapModel getMap(Long id_map) {
-        return mapper.mapEntityToModel(mapDAO.getMap(id_map));
+        try {
+            return mapper.mapEntityToModel(mapDAO.getMap(id_map));
+        } catch (EmptyResultDataAccessException e) {
+            throw new NotFoundException("La map avec l'id " + id_map + " n'existe pas");
+        }
     }
 
     /**
@@ -58,7 +65,12 @@ public class MapRepository {
      * @param mapModel le modèle de la carte à mettre à jour
      */
     public void updateMap(MapModel mapModel) {
-        mapDAO.updateMap(mapper.mapModelToEntity(mapModel));
+        MapEntity existingMap = mapDAO.getMap(mapModel.getId_map());
+        if (existingMap == null) {
+            throw new NotFoundException("La map avec l'id " + mapModel.getId_map() + " n'existe pas");
+        }
+        MapEntity mapEntity = mapper.mapModelToEntity(mapModel);
+        mapDAO.updateMap(mapEntity);
     }
 
     /**

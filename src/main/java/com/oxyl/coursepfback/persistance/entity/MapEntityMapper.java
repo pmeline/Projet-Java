@@ -31,6 +31,9 @@ public class MapEntityMapper {
      * @return le modèle converti
      */
     public MapModel mapEntityToModel(MapEntity mapEntity) {
+        if (mapEntity == null) {
+            return null;
+        }
         MapModel mapModel = new MapModel();
         mapModel.setId_map(mapEntity.getId_map());
         mapModel.setLigne(mapEntity.getLigne());

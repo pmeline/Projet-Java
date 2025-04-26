@@ -4,8 +4,10 @@ import com.oxyl.coursepfback.model.ZombieModel;
 import com.oxyl.coursepfback.persistance.dao.ZombieDAO;
 import com.oxyl.coursepfback.persistance.entity.ZombieEntity;
 import com.oxyl.coursepfback.persistance.entity.ZombieEntityMapper;
+import com.oxyl.coursepfback.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.dao.EmptyResultDataAccessException;
 
 import java.util.List;
 
@@ -43,7 +45,11 @@ public class ZombieRepository {
      * @return le zombie correspondant
      */
     public ZombieModel getZombie(Long id_zombie) {
-        return mapper.mapEntityToModel(zombieDAO.getZombie(id_zombie));
+        try {
+            return mapper.mapEntityToModel(zombieDAO.getZombie(id_zombie));
+        } catch (EmptyResultDataAccessException e) {
+            throw new NotFoundException("Le zombie avec l'id " + id_zombie + " n'existe pas");
+        }
     }
 
     /**
@@ -69,6 +75,10 @@ public class ZombieRepository {
      * @param zombieModel le modèle du zombie à mettre à jour
      */
     public void updateZombie(ZombieModel zombieModel) {
+        ZombieEntity existingZombie = zombieDAO.getZombie(zombieModel.getId_zombie());
+        if (existingZombie == null) {
+            throw new NotFoundException("Le zombie avec l'id " + zombieModel.getId_zombie() + " n'existe pas");
+        }
         ZombieEntity zombieEntity = mapper.mapModelToEntity(zombieModel);
         zombieDAO.updateZombie(zombieEntity);
     }

@@ -97,41 +97,54 @@ public class MapService implements MapServiceInterface {
      */
     @Override
     public void updateMap(MapModel mapModel) {
-        logger.debug("Mise à jour de la map: {}", mapModel);
         if (mapModel == null) {
             logger.error("Tentative de mise à jour d'une map null");
             throw new ValidationException("La map ne peut pas être null");
         }
-        
+
         MapModel existingMap = mapRepository.getMap(mapModel.getId_map());
         if (existingMap == null) {
             logger.error("Tentative de mise à jour d'une map inexistante avec l'id: {}", mapModel.getId_map());
             throw new NotFoundException("La map avec l'id " + mapModel.getId_map() + " n'existe pas");
         }
-        
-        // Mise à jour partielle
+
         if (mapModel.getLigne() != null) {
             if (mapModel.getLigne() <= 0) {
-                logger.error("Tentative de mise à jour du nombre de lignes avec une valeur négative: {}", mapModel.getLigne());
-                throw new ValidationException("Le nombre de lignes doit être positif");
+                logger.error("Tentative de mise à jour d'une map avec un nombre de lignes invalide: {}", mapModel.getLigne());
+                throw new ValidationException("Le nombre de lignes doit être strictement positif");
+            }
+            if (mapModel.getLigne() > 20) {
+                logger.error("Tentative de mise à jour d'une map avec un nombre de lignes trop grand: {}", mapModel.getLigne());
+                throw new ValidationException("Le nombre de lignes ne peut pas dépasser 20");
             }
             existingMap.setLigne(mapModel.getLigne());
         }
+
         if (mapModel.getColonne() != null) {
             if (mapModel.getColonne() <= 0) {
-                logger.error("Tentative de mise à jour du nombre de colonnes avec une valeur négative: {}", mapModel.getColonne());
-                throw new ValidationException("Le nombre de colonnes doit être positif");
+                logger.error("Tentative de mise à jour d'une map avec un nombre de colonnes invalide: {}", mapModel.getColonne());
+                throw new ValidationException("Le nombre de colonnes doit être strictement positif");
+            }
+            if (mapModel.getColonne() > 20) {
+                logger.error("Tentative de mise à jour d'une map avec un nombre de colonnes trop grand: {}", mapModel.getColonne());
+                throw new ValidationException("Le nombre de colonnes ne peut pas dépasser 20");
             }
             existingMap.setColonne(mapModel.getColonne());
         }
+
         if (mapModel.getChemin_image() != null) {
-            if (mapModel.getChemin_image().trim().isEmpty()) {
-                logger.error("Tentative de mise à jour du chemin d'image avec une valeur vide");
+            String cheminImage = mapModel.getChemin_image().trim();
+            if (cheminImage.isEmpty()) {
+                logger.error("Tentative de mise à jour d'une map avec un chemin d'image vide");
                 throw new ValidationException("Le chemin de l'image ne peut pas être vide");
             }
-            existingMap.setChemin_image(mapModel.getChemin_image());
+            if (!cheminImage.matches("^[a-zA-Z0-9_\\-\\.]+\\.(png|jpg|jpeg|gif)$")) {
+                logger.error("Tentative de mise à jour d'une map avec un chemin d'image invalide: {}", cheminImage);
+                throw new ValidationException("Le chemin de l'image doit être un nom de fichier valide avec l'extension .png, .jpg, .jpeg ou .gif");
+            }
+            existingMap.setChemin_image(cheminImage);
         }
-        
+
         mapRepository.updateMap(existingMap);
         logger.info("Map mise à jour avec succès: {}", existingMap);
     }
