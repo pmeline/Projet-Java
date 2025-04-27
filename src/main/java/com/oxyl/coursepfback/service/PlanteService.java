@@ -45,7 +45,7 @@ public class PlanteService implements PlanteServiceInterface {
             logger.error("Tentative de création d'une plante avec des points de vie négatifs: {}", planteModel.getPoint_de_vie());
             throw new ValidationException("Les points de vie doivent être positifs");
         }
-        if (planteModel.getAttaque_par_seconde() <= 0) {
+        if (planteModel.getAttaque_par_seconde() < 0) {
             logger.error("Tentative de création d'une plante avec une attaque par seconde négative: {}", planteModel.getAttaque_par_seconde());
             throw new ValidationException("L'attaque par seconde doit être positive");
         }
@@ -57,7 +57,7 @@ public class PlanteService implements PlanteServiceInterface {
             logger.error("Tentative de création d'une plante avec un coût négatif: {}", planteModel.getCout());
             throw new ValidationException("Le coût doit être positif");
         }
-        if (planteModel.getSoleil_par_seconde() <= 0) {
+        if (planteModel.getSoleil_par_seconde() < 0) {
             logger.error("Tentative de création d'une plante avec un soleil par seconde négatif: {}", planteModel.getSoleil_par_seconde());
             throw new ValidationException("Le soleil par seconde doit être positif");
         }
