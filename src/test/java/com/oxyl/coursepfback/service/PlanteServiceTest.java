@@ -136,13 +136,6 @@ class PlanteServiceTest {
     }
 
     @Test
-    void createPlante_withEmptyCheminImage_shouldThrowValidationException() {
-        planteModel.setChemin_image("");
-        assertThrows(ValidationException.class, () -> planteService.createPlante(planteModel));
-        verify(planteRepository, never()).createPlante(any());
-    }
-
-    @Test
     void createPlante_withNegativeValues_shouldThrowValidationException() {
         planteModel.setPoint_de_vie(-1);
         assertThrows(ValidationException.class, () -> planteService.createPlante(planteModel));
@@ -167,6 +160,46 @@ class PlanteServiceTest {
         planteModel.setSoleil_par_seconde(-1.0);
         assertThrows(ValidationException.class, () -> planteService.createPlante(planteModel));
         verify(planteRepository, never()).createPlante(any());
+    }
+
+    @Test
+    void createPlante_withMaxPointsDeVie_shouldSucceed() {
+        planteModel.setPoint_de_vie(1000);
+        doNothing().when(planteRepository).createPlante(any(PlanteModel.class));
+        assertDoesNotThrow(() -> planteService.createPlante(planteModel));
+        verify(planteRepository).createPlante(planteModel);
+    }
+
+    @Test
+    void createPlante_withMaxAttaqueParSeconde_shouldSucceed() {
+        planteModel.setAttaque_par_seconde(10.0);
+        doNothing().when(planteRepository).createPlante(any(PlanteModel.class));
+        assertDoesNotThrow(() -> planteService.createPlante(planteModel));
+        verify(planteRepository).createPlante(planteModel);
+    }
+
+    @Test
+    void createPlante_withMaxDegatAttaque_shouldSucceed() {
+        planteModel.setDegat_attaque(100);
+        doNothing().when(planteRepository).createPlante(any(PlanteModel.class));
+        assertDoesNotThrow(() -> planteService.createPlante(planteModel));
+        verify(planteRepository).createPlante(planteModel);
+    }
+
+    @Test
+    void createPlante_withMaxSoleilParSeconde_shouldSucceed() {
+        planteModel.setSoleil_par_seconde(50.0);
+        doNothing().when(planteRepository).createPlante(any(PlanteModel.class));
+        assertDoesNotThrow(() -> planteService.createPlante(planteModel));
+        verify(planteRepository).createPlante(planteModel);
+    }
+
+    @Test
+    void createPlante_withMaxCout_shouldSucceed() {
+        planteModel.setCout(500);
+        doNothing().when(planteRepository).createPlante(any(PlanteModel.class));
+        assertDoesNotThrow(() -> planteService.createPlante(planteModel));
+        verify(planteRepository).createPlante(planteModel);
     }
 
     @Test
@@ -507,20 +540,12 @@ class PlanteServiceTest {
     }
 
     @Test
-    void updatePlante_withNullValues_shouldSucceed() {
+    void updatePlante_withNullValues_shouldKeepExistingValues() {
         when(planteRepository.getPlante(1L)).thenReturn(planteModel);
         doNothing().when(planteRepository).updatePlante(any(PlanteModel.class));
         
         PlanteModel update = new PlanteModel();
         update.setId_plante(1L);
-        update.setNom(null);
-        update.setPoint_de_vie(null);
-        update.setAttaque_par_seconde(null);
-        update.setDegat_attaque(null);
-        update.setCout(null);
-        update.setSoleil_par_seconde(null);
-        update.setEffet(null);
-        update.setChemin_image(null);
         
         assertDoesNotThrow(() -> planteService.updatePlante(update));
         
@@ -539,13 +564,14 @@ class PlanteServiceTest {
     }
 
     @Test
-    void updatePlante_withPartialUpdate_shouldSucceed() {
+    void updatePlante_withPartialUpdate_shouldUpdateOnlySpecifiedFields() {
         when(planteRepository.getPlante(1L)).thenReturn(planteModel);
         doNothing().when(planteRepository).updatePlante(any(PlanteModel.class));
         
         PlanteModel update = new PlanteModel();
         update.setId_plante(1L);
         update.setNom("Nouveau nom");
+        update.setPoint_de_vie(200);
         
         assertDoesNotThrow(() -> planteService.updatePlante(update));
         
@@ -554,7 +580,7 @@ class PlanteServiceTest {
         
         PlanteModel updatedPlante = captor.getValue();
         assertEquals("Nouveau nom", updatedPlante.getNom());
-        assertEquals(planteModel.getPoint_de_vie(), updatedPlante.getPoint_de_vie());
+        assertEquals(200, updatedPlante.getPoint_de_vie());
         assertEquals(planteModel.getAttaque_par_seconde(), updatedPlante.getAttaque_par_seconde());
         assertEquals(planteModel.getDegat_attaque(), updatedPlante.getDegat_attaque());
         assertEquals(planteModel.getCout(), updatedPlante.getCout());

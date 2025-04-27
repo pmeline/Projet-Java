@@ -420,43 +420,26 @@ class ZombieServiceTest {
     }
 
     @Test
-    void updateZombie_withNullValues_shouldSucceed() {
-        ZombieModel zombieModel = new ZombieModel();
-        zombieModel.setId_zombie(1L);
-        zombieModel.setNom(null);
-        zombieModel.setPoint_de_vie(null);
-        zombieModel.setAttaque_par_seconde(null);
-        zombieModel.setDegat_attaque(null);
-        zombieModel.setVitesse_de_deplacement(null);
-        zombieModel.setId_map(null);
-        zombieModel.setChemin_image(null);
-        
-        ZombieModel existingZombie = new ZombieModel();
-        existingZombie.setId_zombie(1L);
-        existingZombie.setNom("Old Name");
-        existingZombie.setPoint_de_vie(100);
-        existingZombie.setAttaque_par_seconde(1.0);
-        existingZombie.setDegat_attaque(10);
-        existingZombie.setVitesse_de_deplacement(1.0);
-        existingZombie.setId_map(1L);
-        existingZombie.setChemin_image("old_image.png");
-        
-        when(zombieRepository.getZombie(1L)).thenReturn(existingZombie);
+    void updateZombie_withNullValues_shouldKeepExistingValues() {
+        when(zombieRepository.getZombie(1L)).thenReturn(zombieModel);
         doNothing().when(zombieRepository).updateZombie(any(ZombieModel.class));
         
-        assertDoesNotThrow(() -> zombieService.updateZombie(zombieModel));
+        ZombieModel update = new ZombieModel();
+        update.setId_zombie(1L);
+        
+        assertDoesNotThrow(() -> zombieService.updateZombie(update));
         
         ArgumentCaptor<ZombieModel> captor = ArgumentCaptor.forClass(ZombieModel.class);
         verify(zombieRepository).updateZombie(captor.capture());
         
         ZombieModel updatedZombie = captor.getValue();
-        assertEquals("Old Name", updatedZombie.getNom());
-        assertEquals(100, updatedZombie.getPoint_de_vie());
-        assertEquals(1.0, updatedZombie.getAttaque_par_seconde());
-        assertEquals(10, updatedZombie.getDegat_attaque());
-        assertEquals(1.0, updatedZombie.getVitesse_de_deplacement());
-        assertEquals("old_image.png", updatedZombie.getChemin_image());
-        assertEquals(1L, updatedZombie.getId_map());
+        assertEquals(zombieModel.getNom(), updatedZombie.getNom());
+        assertEquals(zombieModel.getPoint_de_vie(), updatedZombie.getPoint_de_vie());
+        assertEquals(zombieModel.getAttaque_par_seconde(), updatedZombie.getAttaque_par_seconde());
+        assertEquals(zombieModel.getDegat_attaque(), updatedZombie.getDegat_attaque());
+        assertEquals(zombieModel.getVitesse_de_deplacement(), updatedZombie.getVitesse_de_deplacement());
+        assertEquals(zombieModel.getChemin_image(), updatedZombie.getChemin_image());
+        assertEquals(zombieModel.getId_map(), updatedZombie.getId_map());
     }
 
     @Test
@@ -482,5 +465,77 @@ class ZombieServiceTest {
         assertEquals(zombieModel.getVitesse_de_deplacement(), updatedZombie.getVitesse_de_deplacement());
         assertEquals(zombieModel.getChemin_image(), updatedZombie.getChemin_image());
         assertEquals(zombieModel.getId_map(), updatedZombie.getId_map());
+    }
+
+    @Test
+    void createZombie_withMaxPointsDeVie_shouldSucceed() {
+        zombieModel.setPoint_de_vie(1000);
+        when(mapService.getMap(1L)).thenReturn(mapModel);
+        doNothing().when(zombieRepository).createZombie(any(ZombieModel.class));
+        
+        assertDoesNotThrow(() -> zombieService.createZombie(zombieModel));
+        verify(zombieRepository).createZombie(zombieModel);
+    }
+
+    @Test
+    void createZombie_withMaxAttaqueParSeconde_shouldSucceed() {
+        zombieModel.setAttaque_par_seconde(10.0);
+        when(mapService.getMap(1L)).thenReturn(mapModel);
+        doNothing().when(zombieRepository).createZombie(any(ZombieModel.class));
+        
+        assertDoesNotThrow(() -> zombieService.createZombie(zombieModel));
+        verify(zombieRepository).createZombie(zombieModel);
+    }
+
+    @Test
+    void createZombie_withMaxDegatAttaque_shouldSucceed() {
+        zombieModel.setDegat_attaque(100);
+        when(mapService.getMap(1L)).thenReturn(mapModel);
+        doNothing().when(zombieRepository).createZombie(any(ZombieModel.class));
+        
+        assertDoesNotThrow(() -> zombieService.createZombie(zombieModel));
+        verify(zombieRepository).createZombie(zombieModel);
+    }
+
+    @Test
+    void createZombie_withMaxVitesseDeplacement_shouldSucceed() {
+        zombieModel.setVitesse_de_deplacement(5.0);
+        when(mapService.getMap(1L)).thenReturn(mapModel);
+        doNothing().when(zombieRepository).createZombie(any(ZombieModel.class));
+        
+        assertDoesNotThrow(() -> zombieService.createZombie(zombieModel));
+        verify(zombieRepository).createZombie(zombieModel);
+    }
+
+    @Test
+    void updateZombie_withPartialUpdate_shouldUpdateOnlySpecifiedFields() {
+        when(zombieRepository.getZombie(1L)).thenReturn(zombieModel);
+        doNothing().when(zombieRepository).updateZombie(any(ZombieModel.class));
+        
+        ZombieModel update = new ZombieModel();
+        update.setId_zombie(1L);
+        update.setNom("Nouveau nom");
+        update.setPoint_de_vie(200);
+        
+        assertDoesNotThrow(() -> zombieService.updateZombie(update));
+        
+        ArgumentCaptor<ZombieModel> captor = ArgumentCaptor.forClass(ZombieModel.class);
+        verify(zombieRepository).updateZombie(captor.capture());
+        
+        ZombieModel updatedZombie = captor.getValue();
+        assertEquals("Nouveau nom", updatedZombie.getNom());
+        assertEquals(200, updatedZombie.getPoint_de_vie());
+        assertEquals(zombieModel.getAttaque_par_seconde(), updatedZombie.getAttaque_par_seconde());
+        assertEquals(zombieModel.getDegat_attaque(), updatedZombie.getDegat_attaque());
+        assertEquals(zombieModel.getVitesse_de_deplacement(), updatedZombie.getVitesse_de_deplacement());
+        assertEquals(zombieModel.getChemin_image(), updatedZombie.getChemin_image());
+        assertEquals(zombieModel.getId_map(), updatedZombie.getId_map());
+    }
+
+    @Test
+    void createZombie_withInvalidMapId_shouldThrowValidationException() {
+        zombieModel.setId_map(null);
+        assertThrows(ValidationException.class, () -> zombieService.createZombie(zombieModel));
+        verify(zombieRepository, never()).createZombie(any());
     }
 } 

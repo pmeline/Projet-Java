@@ -4,10 +4,14 @@ import com.oxyl.coursepfback.dto.MapDTO;
 import com.oxyl.coursepfback.dto.MapDTOMapper;
 import com.oxyl.coursepfback.model.MapModel;
 import com.oxyl.coursepfback.service.MapService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -20,6 +24,7 @@ public class MapController {
     
     private final MapService mapService;
     private final MapDTOMapper mapper;
+    private static final Logger logger = LoggerFactory.getLogger(MapController.class);
     
     public MapController(MapService mapService, MapDTOMapper mapper) {
         this.mapService = mapService;
@@ -32,6 +37,7 @@ public class MapController {
      */
     @GetMapping
     public List<MapDTO> getAllMaps() {
+        logger.info("Récupération de toutes les maps");
         List<MapModel> maps = mapService.getAllMaps();
         return mapper.mapListModelsToDTO(maps);
     }
@@ -43,11 +49,9 @@ public class MapController {
      */
     @GetMapping("/{id_map}")
     public ResponseEntity<MapDTO> getMapById(@PathVariable("id_map") Long id_map) {
+        logger.info("Récupération de la map avec l'id: {}", id_map);
         MapModel map = mapService.getMap(id_map);
-        if (map == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(mapper.mapModelToDTO(map), HttpStatus.OK);
+        return ResponseEntity.ok(mapper.mapModelToDTO(map));
     }
 
     /**
@@ -57,6 +61,7 @@ public class MapController {
      */
     @PostMapping
     public ResponseEntity<MapDTO> createMap(@RequestBody MapDTO mapDTO) {
+        logger.info("Création d'une nouvelle map: {}", mapDTO);
         MapModel mapModel = mapper.mapDTOToModel(mapDTO);
         mapService.createMap(mapModel);
         return new ResponseEntity<>(mapper.mapModelToDTO(mapModel), HttpStatus.CREATED);
@@ -72,36 +77,60 @@ public class MapController {
     public ResponseEntity<MapDTO> updateMap(
             @PathVariable("id_map") Long id_map,
             @RequestBody MapDTO mapDTO) {
+        logger.info("Mise à jour de la map avec l'id: {}", id_map);
         MapModel mapModel = mapper.mapDTOToModel(mapDTO);
         mapModel.setId_map(id_map);
         mapService.updateMap(mapModel);
-        return new ResponseEntity<>(mapper.mapModelToDTO(mapModel), HttpStatus.OK);
+        return ResponseEntity.ok(mapper.mapModelToDTO(mapModel));
     }
 
     /**
      * Supprime une map
      * @param id_map l'identifiant de la map à supprimer
-     * @return une réponse vide en cas de succès, ou un message d'erreur en cas d'échec
+     * @return une réponse vide en cas de succès
      */
     @DeleteMapping("/{id_map}")
-    public ResponseEntity<Object> deleteMap(@PathVariable("id_map") Long id_map) {
-        try {
-            mapService.deleteMap(id_map);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } catch (Exception e) {
-            return new ResponseEntity<>(
-                Map.of("error", e.getMessage()),
-                HttpStatus.INTERNAL_SERVER_ERROR
-            );
-        }
+    public ResponseEntity<Void> deleteMap(@PathVariable("id_map") Long id_map) {
+        logger.info("Suppression de la map avec l'id: {}", id_map);
+        mapService.deleteMap(id_map);
+        return ResponseEntity.noContent().build();
     }
 
+    /**
+     * Valide toutes les maps
+     * @return le résultat de la validation
+     */
     @GetMapping("/validation")
-    public ResponseEntity<MapDTO> getValidationExample() {
+    public ResponseEntity<Map<String, Object>> getValidationExample() {
+        logger.info("Appel de l'endpoint /maps/validation");
         List<MapDTO> maps = getAllMaps();
+        logger.info("Nombre de maps trouvées : {}", maps.size());
+        
+        Map<String, Object> validationResult = new HashMap<>();
+        List<String> errors = new ArrayList<>();
+        
         if (maps.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            logger.warn("Aucune map trouvée");
+            errors.add("Aucune map trouvée dans la base de données");
+        } else {
+            for (MapDTO map : maps) {
+                if (map.getLigne() <= 0) {
+                    errors.add("Le nombre de lignes doit être positif pour la map ID " + map.getId_map());
+                }
+                if (map.getColonne() <= 0) {
+                    errors.add("Le nombre de colonnes doit être positif pour la map ID " + map.getId_map());
+                }
+                if (map.getChemin_image() == null || map.getChemin_image().trim().isEmpty()) {
+                    errors.add("Chemin de l'image manquant pour la map ID " + map.getId_map());
+                }
+            }
         }
-        return ResponseEntity.ok(maps.get(0));
+
+        validationResult.put("valid", errors.isEmpty());
+        validationResult.put("message", errors.isEmpty() ? "Toutes les maps sont valides" : "Erreurs de validation détectées");
+        validationResult.put("errors", errors);
+        validationResult.put("total_maps", maps.size());
+        
+        return ResponseEntity.ok(validationResult);
     }
 }

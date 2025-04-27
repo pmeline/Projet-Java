@@ -97,6 +97,22 @@ class MapServiceTest {
     }
 
     @Test
+    void createMap_withMaxLigne_shouldSucceed() {
+        mapModel.setLigne(20);
+        doNothing().when(mapRepository).createMap(any(MapModel.class));
+        assertDoesNotThrow(() -> mapService.createMap(mapModel));
+        verify(mapRepository).createMap(mapModel);
+    }
+
+    @Test
+    void createMap_withMaxColonne_shouldSucceed() {
+        mapModel.setColonne(20);
+        doNothing().when(mapRepository).createMap(any(MapModel.class));
+        assertDoesNotThrow(() -> mapService.createMap(mapModel));
+        verify(mapRepository).createMap(mapModel);
+    }
+
+    @Test
     void getMap_shouldReturnMap() {
         when(mapRepository.getMap(1L)).thenReturn(mapModel);
         
@@ -269,15 +285,12 @@ class MapServiceTest {
     }
 
     @Test
-    void updateMap_withAllNullValues_shouldSucceed() {
+    void updateMap_withNullValues_shouldKeepExistingValues() {
         when(mapRepository.getMap(1L)).thenReturn(mapModel);
         doNothing().when(mapRepository).updateMap(any(MapModel.class));
         
         MapModel update = new MapModel();
         update.setId_map(1L);
-        update.setLigne(null);
-        update.setColonne(null);
-        update.setChemin_image(null);
         
         assertDoesNotThrow(() -> mapService.updateMap(update));
         
@@ -288,6 +301,27 @@ class MapServiceTest {
         assertEquals(mapModel.getLigne(), updatedMap.getLigne());
         assertEquals(mapModel.getColonne(), updatedMap.getColonne());
         assertEquals(mapModel.getChemin_image(), updatedMap.getChemin_image());
+    }
+
+    @Test
+    void updateMap_withPartialUpdate_shouldUpdateOnlySpecifiedFields() {
+        when(mapRepository.getMap(1L)).thenReturn(mapModel);
+        doNothing().when(mapRepository).updateMap(any(MapModel.class));
+        
+        MapModel update = new MapModel();
+        update.setId_map(1L);
+        update.setLigne(10);
+        update.setChemin_image("new_map.png");
+        
+        assertDoesNotThrow(() -> mapService.updateMap(update));
+        
+        ArgumentCaptor<MapModel> captor = ArgumentCaptor.forClass(MapModel.class);
+        verify(mapRepository).updateMap(captor.capture());
+        
+        MapModel updatedMap = captor.getValue();
+        assertEquals(10, updatedMap.getLigne());
+        assertEquals(mapModel.getColonne(), updatedMap.getColonne());
+        assertEquals("new_map.png", updatedMap.getChemin_image());
     }
 
     @Test
@@ -329,11 +363,12 @@ class MapServiceTest {
 
     @Test
     void deleteMap_withMultipleZombies_shouldDeleteAllZombies() {
-        when(mapRepository.getMap(1L)).thenReturn(mapModel);
         ZombieModel zombie1 = new ZombieModel();
         zombie1.setId_zombie(1L);
         ZombieModel zombie2 = new ZombieModel();
         zombie2.setId_zombie(2L);
+        
+        when(mapRepository.getMap(1L)).thenReturn(mapModel);
         when(zombieService.getZombiesByMapId(1L)).thenReturn(Arrays.asList(zombie1, zombie2));
         doNothing().when(zombieService).deleteZombie(anyLong());
         doNothing().when(mapRepository).deleteMap(1L);
