@@ -1,9 +1,9 @@
+com\oxyl\coursepfback\service\MapServiceTest.class
+com\oxyl\coursepfback\controller\ZombieControllerTest.class
 com\oxyl\coursepfback\controller\PlanteControllerTest.class
 com\oxyl\coursepfback\persistance\repository\PlanteRepositoryTest.class
-com\oxyl\coursepfback\service\MapServiceTest.class
 com\oxyl\coursepfback\persistance\repository\ZombieRepositoryTest.class
 com\oxyl\coursepfback\controller\MapControllerTest.class
 com\oxyl\coursepfback\service\ZombieServiceTest.class
 com\oxyl\coursepfback\service\PlanteServiceTest.class
 com\oxyl\coursepfback\persistance\repository\MapRepositoryTest.class
-com\oxyl\coursepfback\controller\ZombieControllerTest.class

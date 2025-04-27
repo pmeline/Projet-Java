@@ -20,16 +20,16 @@ public class ZombieEntityMapper {
         if (entity == null) {
             return null;
         }
-        ZombieModel model = new ZombieModel();
-        model.setId_zombie(entity.getId_zombie());
-        model.setNom(entity.getNom());
-        model.setPoint_de_vie(entity.getPoint_de_vie());
-        model.setAttaque_par_seconde(entity.getAttaque_par_seconde());
-        model.setDegat_attaque(entity.getDegat_attaque());
-        model.setVitesse_de_deplacement(entity.getVitesse_de_deplacement());
-        model.setChemin_image(entity.getChemin_image());
-        model.setId_map(entity.getId_map());
-        return model;
+        return new ZombieModel(
+            entity.getId_zombie(),
+            entity.getNom(),
+            entity.getPoint_de_vie(),
+            entity.getAttaque_par_seconde(),
+            entity.getDegat_attaque(),
+            entity.getVitesse_de_deplacement(),
+            entity.getChemin_image(),
+            entity.getId_map()
+        );
     }
 
     /**
@@ -41,16 +41,16 @@ public class ZombieEntityMapper {
         if (model == null) {
             return null;
         }
-        ZombieEntity entity = new ZombieEntity();
-        entity.setId_zombie(model.getId_zombie());
-        entity.setNom(model.getNom());
-        entity.setPoint_de_vie(model.getPoint_de_vie());
-        entity.setAttaque_par_seconde(model.getAttaque_par_seconde());
-        entity.setDegat_attaque(model.getDegat_attaque());
-        entity.setVitesse_de_deplacement(model.getVitesse_de_deplacement());
-        entity.setChemin_image(model.getChemin_image());
-        entity.setId_map(model.getId_map());
-        return entity;
+        return new ZombieEntity(
+            model.getId_zombie(),
+            model.getNom(),
+            model.getPoint_de_vie(),
+            model.getAttaque_par_seconde(),
+            model.getDegat_attaque(),
+            model.getVitesse_de_deplacement(),
+            model.getChemin_image(),
+            model.getId_map()
+        );
     }
 
     /**
@@ -59,6 +59,11 @@ public class ZombieEntityMapper {
      * @return la liste de modèles convertie
      */
     public List<ZombieModel> mapListEntityToModel(List<ZombieEntity> zombieEntities) {
-        return zombieEntities.stream().map(this::mapEntityToModel).collect(Collectors.toList());
+        if (zombieEntities == null) {
+            return null;
+        }
+        return zombieEntities.stream()
+            .map(this::mapEntityToModel)
+            .collect(Collectors.toList());
     }
 }
