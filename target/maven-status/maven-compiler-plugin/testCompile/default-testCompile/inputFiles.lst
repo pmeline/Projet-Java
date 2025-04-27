@@ -1,6 +1,12 @@
 D:\Document\Etude sup\4A\JAVA\projet_pvz_fonctionnel\projet_pvz\src\test\java\com\oxyl\coursepfback\controller\MapControllerTest.java
 D:\Document\Etude sup\4A\JAVA\projet_pvz_fonctionnel\projet_pvz\src\test\java\com\oxyl\coursepfback\controller\PlanteControllerTest.java
 D:\Document\Etude sup\4A\JAVA\projet_pvz_fonctionnel\projet_pvz\src\test\java\com\oxyl\coursepfback\controller\ZombieControllerTest.java
+D:\Document\Etude sup\4A\JAVA\projet_pvz_fonctionnel\projet_pvz\src\test\java\com\oxyl\coursepfback\dto\MapDTOMapperTest.java
+D:\Document\Etude sup\4A\JAVA\projet_pvz_fonctionnel\projet_pvz\src\test\java\com\oxyl\coursepfback\dto\MapDTOTest.java
+D:\Document\Etude sup\4A\JAVA\projet_pvz_fonctionnel\projet_pvz\src\test\java\com\oxyl\coursepfback\dto\PlanteDTOMapperTest.java
+D:\Document\Etude sup\4A\JAVA\projet_pvz_fonctionnel\projet_pvz\src\test\java\com\oxyl\coursepfback\dto\PlanteDTOTest.java
+D:\Document\Etude sup\4A\JAVA\projet_pvz_fonctionnel\projet_pvz\src\test\java\com\oxyl\coursepfback\dto\ZombieDTOMapperTest.java
+D:\Document\Etude sup\4A\JAVA\projet_pvz_fonctionnel\projet_pvz\src\test\java\com\oxyl\coursepfback\dto\ZombieDTOTest.java
 D:\Document\Etude sup\4A\JAVA\projet_pvz_fonctionnel\projet_pvz\src\test\java\com\oxyl\coursepfback\persistance\dao\MapDAOTest.java
 D:\Document\Etude sup\4A\JAVA\projet_pvz_fonctionnel\projet_pvz\src\test\java\com\oxyl\coursepfback\persistance\dao\PlanteDAOTest.java
 D:\Document\Etude sup\4A\JAVA\projet_pvz_fonctionnel\projet_pvz\src\test\java\com\oxyl\coursepfback\persistance\dao\ZombieDAOTest.java
