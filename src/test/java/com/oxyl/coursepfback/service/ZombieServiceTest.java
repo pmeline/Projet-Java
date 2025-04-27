@@ -538,4 +538,13 @@ class ZombieServiceTest {
         assertThrows(ValidationException.class, () -> zombieService.createZombie(zombieModel));
         verify(zombieRepository, never()).createZombie(any());
     }
+
+    @Test
+    void updateZombie_withNonExistentMap_shouldThrowValidationException() {
+        when(zombieRepository.getZombie(1L)).thenReturn(zombieModel);
+        when(mapService.getMap(1L)).thenThrow(new NotFoundException("Map non trouvée"));
+        
+        assertThrows(ValidationException.class, () -> zombieService.updateZombie(zombieModel));
+        verify(zombieRepository, never()).updateZombie(any());
+    }
 } 

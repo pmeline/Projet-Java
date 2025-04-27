@@ -45,7 +45,7 @@ public class MapDAO implements MapDAOInterface {
     @Override
     public MapEntity getMap(Long id) {
         String sql = "SELECT id_map, ligne, colonne, chemin_image FROM map WHERE id_map = ?";
-        List<MapEntity> maps = jdbcTemplate.query(sql, new Object[]{id}, new int[]{java.sql.Types.BIGINT}, new MapRowMapper());
+        List<MapEntity> maps = jdbcTemplate.query(sql, new MapRowMapper(), id);
         return maps.isEmpty() ? null : maps.get(0);
     }
 
@@ -66,21 +66,16 @@ public class MapDAO implements MapDAOInterface {
     /**
      * Met à jour une map existante dans la base de données
      * @param map la map à mettre à jour
-     * @throws IllegalArgumentException si la map n'existe pas
      */
     @Override
     public void updateMap(MapEntity map) {
         String sql = "UPDATE map SET ligne = ?, colonne = ?, chemin_image = ? WHERE id_map = ?";
-        int rowsAffected = jdbcTemplate.update(sql,
+        jdbcTemplate.update(sql,
             map.getLigne(),
             map.getColonne(),
             map.getChemin_image(),
             map.getId_map()
         );
-        
-        if (rowsAffected == 0) {
-            throw new IllegalArgumentException("La map avec l'id " + map.getId_map() + " n'existe pas");
-        }
     }
 
     /**
@@ -90,7 +85,7 @@ public class MapDAO implements MapDAOInterface {
     @Override
     public void deleteMap(Long id) {
         String sql = "DELETE FROM map WHERE id_map = ?";
-        jdbcTemplate.update(sql, new Object[]{id}, new int[]{java.sql.Types.BIGINT});
+        jdbcTemplate.update(sql, id);
     }
 
     /**
